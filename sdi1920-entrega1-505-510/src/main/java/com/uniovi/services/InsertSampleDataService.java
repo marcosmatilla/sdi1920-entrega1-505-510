@@ -1,6 +1,7 @@
 package com.uniovi.services;
 
 import javax.annotation.PostConstruct;
+import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class InsertSampleDataService {
 		User user7 = new User("admin@email.com", "Admin", "Admin");
 		user7.setPassword("admin");
 		user7.setRole(rolesService.getRoles()[1]);
-		
+
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
