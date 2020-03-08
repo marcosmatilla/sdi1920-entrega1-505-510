@@ -9,17 +9,18 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column(unique = true)
 	private String email;
-	
+
 	private String name;
 	private String lastName;
 	private String password;
-	
-	@Transient // propiedad que no se almacena e la tabla. 
+
+	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
-	
+
+	private String role;
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -81,5 +82,13 @@ public class User {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getRole() {
+		return role;
 	}
 }

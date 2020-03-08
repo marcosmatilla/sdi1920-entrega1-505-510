@@ -23,7 +23,6 @@ public class SecurityService {
 		if (userDetails instanceof UserDetails) {
 			return ((UserDetails) userDetails).getUsername();
 		}
-		System.out.println(userDetails);
 		return null;
 	}
 

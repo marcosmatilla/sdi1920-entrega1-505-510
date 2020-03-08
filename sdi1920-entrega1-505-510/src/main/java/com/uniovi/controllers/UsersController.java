@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -21,6 +22,8 @@ public class UsersController {
 	private SecurityService securityService;
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
+	@Autowired
+	private RolesService rolesService;
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {
@@ -33,7 +36,7 @@ public class UsersController {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "user/add";
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -46,17 +49,19 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
+		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, String error) {
+		if (error != null) {
+			model.addAttribute("error", error);
+		}
 		return "login";
+		
 	}
-	
 
-
-	
 }
