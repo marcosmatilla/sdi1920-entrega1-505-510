@@ -28,6 +28,7 @@ public class UsersController {
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
+//		model.addAttribute("page", users);
 		return "user/list";
 	}
 
