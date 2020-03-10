@@ -11,14 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-<<<<<<< Updated upstream
-import org.openqa.selenium.WebDriver;
-=======
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
->>>>>>> Stashed changes
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
@@ -72,9 +68,9 @@ public class AppTest {
 		driver.quit();
 	}
 
-	//Requisitos obligatorios
-	
-	// PR01, Registro de usuarios con datos válidos
+	// Requisitos obligatorios
+
+	// [Prueba1] Registro de Usuario con datos válidos.
 	@Test
 	public void PR01() {
 		// Vamos al formulario de registro
@@ -85,53 +81,57 @@ public class AppTest {
 		PO_View.checkElement(driver, "text", "marcos@gmail.com");
 
 	}
-<<<<<<< Updated upstream
-	
-	
-	
-=======
->>>>>>> Stashed changes
 
-	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
-	// .... pagination pagination-centered, Error.signup.dni.length
+	// [Prueba2] Registro de Usuario con datos inválidos (email vacío, nombre vacío,
+	// apellidos vacíos).
+
 	@Test
-	public void PR06() {
+	public void PR02() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990A", "Josefo", "Perez", "77777", "77777");
-		PO_View.getP();
-		// COmprobamos el error de DNI repetido.
-		PO_RegisterView.checkKey(driver, "Error.signup.dni.duplicate", PO_Properties.getSPANISH());
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Jose", "Perez", "77777", "77777");
-		// COmprobamos el error de Nombre corto .
-		PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777", "77777");
 
+		PO_RegisterView.fillForm(driver, "", "Jose Manuel", "Perez", "77777", "77777");
+		// COmprobamos el error de Nombre corto .
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "marcos@gmail.com", "", "Perez", "77777", "77777");
 		// Comprobamos el errror de Apellido corto
-		PO_RegisterView.checkKey(driver, "Error.signup.lastName.length", PO_Properties.getSPANISH());
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+
 		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "777", "777");
+		PO_RegisterView.fillForm(driver, "marcos@gmail.com", "Josefo", "", "77777", "77777");
 		// Comprobamos el errror de contraseña corto
-		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+	}
+
+	// [Prueba3] Registro de Usuario con datos inválidos (repetición de contraseña
+	// inválida).
+	@Test
+	public void PR03() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+
 		// Rellenamos el formulario
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "77777", "77778");
+		PO_RegisterView.fillForm(driver, "marcos@gmail.com", "Josefo", "Perez", "77777", "77778");
 		// Comprobamos el errror de contraseña no coincide
 		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 
 	}
 
-	// PR07. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
+	// [Prueba4] Registro de Usuario con datos inválidos (email existente).
 	@Test
-	public void PR07() {
-		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+	public void PR04() {
+		// Vamos al formulario de registro
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+
 		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "99999990A", "123456");
-		// COmprobamos que entramos en la pagina privada de Alumno
-		PO_View.checkElement(driver, "text", "Notas del usuario");
+		PO_RegisterView.fillForm(driver, "marcos@gmail.com", "Josefo", "Perez", "77777", "77777");
+		// Comprobamos el error del correo ya existente
+		PO_RegisterView.checkKey(driver, "Error.signup.mail.duplicate", PO_Properties.getSPANISH());
+		
+
 	}
 
 	// PR08. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
