@@ -73,6 +73,10 @@ public class UsersService {
 		return usersRepository.getFriendsOf(pageable, user);
 	}
 	
+	public void acceptFriendRequest(User sender, User reciever) {
+		sender.acceptInvitation(sender, reciever);
+	}
+	
 	/**
 	 * Devuelve el usuario con sesión iniciada en el sistema.
 	 * @return

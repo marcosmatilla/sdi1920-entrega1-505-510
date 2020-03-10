@@ -50,6 +50,26 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						<td>
+							<!-- PONER UN SWITCH PARA DESCOMENTAR EL BOTÓN DE ABAJO EN EL QUE CUADNO SE DE AL BOTÓN DE ARRIBA SE CAMBIE -->
+							<button type="button" th:id="${'fRButton' + user.id}"
+								class="btn btn-info">
+								<span th:id="${'buttonText' + user.id}">Añadir amigo</span>
+							</button>
+
+							<!-- <button type="button" th:id="${'fRButton' + user.id}"
+								class="btn btn-info">
+								<span th:id="${'buttonText' + user.id}">Enviada</span> -->
+								
+							</button> <script th:inline="javascript">
+								  /*<![CDATA[*/
+								  $( "#fRButton[[${user.id}]]" ).click(function() {
+	                                  $("#tableUsers").load("/user/enviarInvitacion/[[${user.id}]]");
+								  });
+								  /*]]>*/
+								</script>
+
+						</td>
 					</tr>
 
 				</tbody>

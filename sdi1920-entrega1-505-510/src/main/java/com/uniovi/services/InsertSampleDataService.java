@@ -14,6 +14,9 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private RolesService rolesService;
+	
+	@Autowired
+	private InvitationService invitationService;
 
 	@PostConstruct
 	public void init() {
@@ -75,6 +78,19 @@ public class InsertSampleDataService {
 		usersService.addUser(user12);
 		usersService.addUser(user13);
 		usersService.addUser(user14);
+		
+		invitationService.sendInvitation(user1, user2);
+		invitationService.sendInvitation(user1, user3);
+		invitationService.sendInvitation(user1, user4);
+		invitationService.sendInvitation(user1, user5);
+		invitationService.sendInvitation(user2, user6);
+		invitationService.sendInvitation(user2, user7);
+		invitationService.sendInvitation(user2, user8);
+		invitationService.sendInvitation(user2, user9);
+		invitationService.sendInvitation(user11, user2);
+		invitationService.sendInvitation(user11, user3);
+		invitationService.sendInvitation(user11, user4);
+		invitationService.sendInvitation(user12, user5);
 	}
 
 }

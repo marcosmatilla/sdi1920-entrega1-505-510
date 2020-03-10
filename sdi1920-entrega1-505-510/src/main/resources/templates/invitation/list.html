@@ -19,7 +19,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="invitation : ${invitationList}">
+					<tr th:each="invitation : ${invitationList}"> <!-- Lista de usuarios InvitationController mirar error -->
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
 						<td>

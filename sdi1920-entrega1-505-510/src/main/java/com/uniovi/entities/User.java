@@ -190,5 +190,20 @@ public class User {
 		return false;
 	}
 	
+	/**
+	 * Comprueba si el usuario actual es amigo del usuario pasado por parámetro.
+	 * 
+	 * @param user
+	 * @return true si son amigos o es él mismo, false si no lo son
+	 */
+	public String checkFriendtatus(User user) {
+		if (this.equals(user) || friends.contains(user))
+			return "FRIENDS";
+		if (existInvitation(user))
+			return "REQUEST_SENT";
+
+		return "NOT_FRIENDS";
+	}
+	
 	
 }
