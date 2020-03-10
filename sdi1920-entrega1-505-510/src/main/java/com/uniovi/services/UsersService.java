@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -75,6 +76,10 @@ public class UsersService {
 
 	public void acceptFriendRequest(User sender, User reciever) {
 		sender.acceptInvitation(sender, reciever);
+	}
+	
+	public void sendFriendRequest(User sender, User reciever, Invitation invitation) {
+		sender.sendInvitation(sender, reciever, invitation);
 	}
 
 	public User getCurrentUser() {

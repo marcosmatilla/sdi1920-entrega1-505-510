@@ -35,12 +35,9 @@
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th>Email</th>
-						<th>Nombre</th>
-						<th>Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
+						<th class="col-md-1">Email</th>
+						<th class="col-md-1">Nombre</th>
+						<th class="col-md-1">Apellidos</th>
 
 
 					</tr>
@@ -50,27 +47,17 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+
+
 						<td>
 							<div th:switch="${activeUser.checkFriendStatus(user)}">
-								<button th:case="'NOT_FRIENDS'" type="button"
-									th:id="${'invitationButton' + user.id}" class="btn btn-info">
-									<span th:id="${'buttonText' + user.id}">Enviar solicitud</span>
-								</button>
 
-								<button th:case="'REQUEST_SENT'" disabled="true" type="button"
-									th:id="${'invitationButton' + user.id}" class="btn btn-info">
-									<span th:id="${'buttonText' + user.id}">Enviada</span>
-								</button>
-								<script th:inline="javascript">
-								  /*<![CDATA[*/
-								  $( "#invitationButton[[${user.id}]]" ).click(function() {
-	                                  $("#tableUsers").load("/user/send/[[${user.id}]]");
-								  });
-								  /*]]>*/
-								</script>
+								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }">Enviar</a>
+
+								<a th:case="'REQUEST_SENT'" disabled="true"
+									th:href="${'/user/send/' + user.id }">Enviada</a>
 
 							</div>
-
 						</td>
 					</tr>
 

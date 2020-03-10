@@ -12,6 +12,9 @@ import com.uniovi.entities.User;
 public interface UsersRepository extends CrudRepository<User, Long> {
 	User findByEmail(String email);
 
+	@Query("SELECT u FROM User u WHERE u.id = ?1")
+	User findUserById(Long id);
+	
 	List<User> findAllByRole(String role);
 
 	Page<User> findAll(Pageable pageable);

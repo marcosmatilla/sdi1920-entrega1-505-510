@@ -2,10 +2,8 @@
 <html lang="en">
 <head th:replace="fragments/head" />
 <body>
-
 	<!-- Barra de NavegaciÃ³n superior -->
 	<nav th:replace="fragments/nav" />
-
 	<div class="container">
 		<h2>Invitaciones</h2>
 		<div class="table-responsive">
@@ -15,7 +13,6 @@
 					<tr>
 						<th class="col-md-1">Nombre</th>
 						<th class="col-md-1">Email</th>
-						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -23,9 +20,9 @@
 						<!-- Lista de usuarios InvitationController mirar error -->
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
-						<td><a th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}">Aceptar</a></td>
-						
-							<!--  NO usar de mometo <button type="button" th:id="${'fRButton' + invitation.id}"
+						<td><a
+							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}">Aceptar</a></td>
+						<!--  NO usar de mometo (va entre td) <button type="button" th:id="${'fRButton' + invitation.id}"
 								class="btn btn-info">Aceptar</button>
 							<script th:inline="javascript">
 								 /*<![CDATA[*/
@@ -35,15 +32,12 @@
 								 });
 								 /*]]>*/
 							</script> -->
-						
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<footer th:replace="fragments/pagination" />
 	</div>
-
 	<footer th:replace="fragments/footer" />
-
 </body>
 </html>

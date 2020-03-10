@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,5 +51,11 @@ public class InvitationController {
 		invitationService.deleteInvitation(sender, reciever, idFr);
 		System.out.println(usersService.getCurrentUser().getFriends());
 		return "redirect:/user/friends/";
+	}
+	
+	@RequestMapping("/user/send/{id}")
+	public String sendFriendRequest(Principal principal, @PathVariable Long id) {
+		invitationService.sendInvitation(principal.getName(), id);
+		return "redirect:/user/list";
 	}
 }

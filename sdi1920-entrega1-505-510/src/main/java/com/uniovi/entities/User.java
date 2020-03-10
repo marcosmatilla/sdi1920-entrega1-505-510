@@ -147,9 +147,8 @@ public class User {
 	 * @param invitation
 	 */
 	public void sendInvitation(User sender, User reciever, Invitation invitation) {
-		System.out.println(sender.getSendedInvitations().add(invitation) + "SEND");
-		System.out.println(reciever.getReceivedInvitations().add(invitation) + "SEND");
-		
+		System.out.println(sender.getSendedInvitations().add(invitation) + " SEND");
+		System.out.println(reciever.getReceivedInvitations().add(invitation) + " SEND");
 	}
 
 	/**
