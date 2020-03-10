@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de NavegaciÃ³n superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2>Lista invitaciones</h2>
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tableInvitations"
+				id="tableInvitations">
+				<thead>
+					<tr>
+						<th class="col-md-1" th:text="#{list.name}"></th>
+						<th class="col-md-1">Email</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="friendRequest : ${friendRequestList}">
+						<td th:text="${friendRequest.sender.getName()}"></td>
+						<td th:text="${friendRequest.sender.getEmail()}"></td>
+						<td>
+							<!-- <button type="button" th:id="${'fRButton' + friendRequest.id}"
+								class="btn btn-info" th:text="#{accept.message}"></button>
+							<script th:inline="javascript">
+								 /*<![CDATA[*/
+								  
+								 $( "#fRButton[[${friendRequest.id}]]" ).click(function() {
+	                                 $("#tableFriendRequest").load("/user/acceptFR/[[${friendRequest.id}]]/[[${friendRequest.sender.getId()}]]");
+								 });
+								 /*]]>*/
+							</script> EJEMPLO DEL BOTON-->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+
+	<footer th:replace="fragments/footer" />
+
+</body>
+</html>

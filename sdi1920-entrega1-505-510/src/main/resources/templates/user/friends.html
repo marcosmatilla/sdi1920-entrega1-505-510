@@ -15,9 +15,12 @@
 		</form>
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
-
-		<script> $( "#updateButton" ).click(function() { $("#tableUsers").load('/user/list/update'); }); </script>
-
+		<!--<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+		  <script>
+			$("#updateButton").click(function() {
+				$("#tableUsers").load('/user/list/update');
+			});
+		</script> -->
 		<script th:inline="javascript">
 			$("#updateButton").click(function() {	 			/*<![CDATA[*/
 				$("#tableUsers").load('/user/list/update');				$( "#updateButton" ).click(function() {
@@ -50,17 +53,8 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						
 					</tr>
-					<div>
-						<div th:if="${user.resend}">
-							<button type="button" th:id="${'resendButton' + mark.id}"
-								class="btn btn-info">Reenviar</button>
-							<script th:inline="javascript"> /*<![CDATA[*/ $( "#resendButton[[${mark.id}]]" ).click(function() { $.get( "/mark/[[${mark.id}]]/noresend", function( data ) { $("#tableMarks").load('/mark/list/update'); }); }); /*]]>*/ </script>
-						</div>
-						<div th:unless="${user.resend}">
-							<a th:href="${'/user/' + user.id + '/resend'}">No reenviar</a>
-						</div>
-					</div>
 				</tbody>
 			</table>
 		</div>

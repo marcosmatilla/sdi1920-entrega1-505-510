@@ -1,9 +1,17 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,12 +27,23 @@ public class User {
 
 	private String name;
 	private String lastName;
+	private String role;
 	private String password;
-
 	@Transient
 	private String passwordConfirm;
+	
+	/* Pruebas enviar invitaciones */
+	private Boolean resend = false;
 
-	private String role;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
+	private Set<User> friends = new HashSet<User>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Invitation> receivedInvitations = new HashSet<Invitation>();
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Invitation> sendedInvitations = new HashSet<Invitation>();
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -34,6 +53,7 @@ public class User {
 	}
 
 	public User() {
+
 	}
 
 	public long getId() {
@@ -95,4 +115,14 @@ public class User {
 	public String getRole() {
 		return role;
 	}
+
+	/* Pruebas enviar invitaciones */
+	public Boolean getResend() {
+		return resend;
+	}
+
+	public void setResend(Boolean resend) {
+		this.resend = resend;
+	}
+
 }
