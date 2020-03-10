@@ -19,21 +19,23 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="invitation : ${invitationList}"> <!-- Lista de usuarios InvitationController mirar error -->
+					<tr th:each="invitation : ${invitationList}">
+						<!-- Lista de usuarios InvitationController mirar error -->
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
-						<td>
-							<button type="button" th:id="${'fRButton' + invitation.id}"
+						<td><a th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}">Aceptar</a></td>
+						
+							<!--  NO usar de mometo <button type="button" th:id="${'fRButton' + invitation.id}"
 								class="btn btn-info">Aceptar</button>
 							<script th:inline="javascript">
 								 /*<![CDATA[*/
 								  
 								 $( "#fRButton[[${invitation.id}]]" ).click(function() {
-	                                 $("#tableInvitation").load("/user/accept/[[${invitation.id}]]/[[${invitation.sender.getId()}]]");
+	                                 $("#invitationTable").load("/user/accept/[[${invitation.id}]]");
 								 });
 								 /*]]>*/
-							</script>
-						</td>
+							</script> -->
+						
 					</tr>
 				</tbody>
 			</table>

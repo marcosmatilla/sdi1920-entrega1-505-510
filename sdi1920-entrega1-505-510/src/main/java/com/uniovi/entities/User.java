@@ -199,7 +199,7 @@ public class User {
 	 * @param user
 	 * @return true si son amigos o es él mismo, false si no lo son
 	 */
-	public String checkFriendtatus(User user) {
+	public String checkFriendStatus(User user) {
 		if (this.equals(user) || friends.contains(user)) {
 			System.out.println("FRIENDS");
 			return "FRIENDS";

@@ -36,19 +36,18 @@ public class InvitationController {
 		User user = usersService.getCurrentUser();
 		Page<Invitation> invitation = invitationService.getFriendRequestsForUser(pageable, user);
 		System.out.println("invittion controller" + invitation);
-		model.addAttribute("invitationList", invitation.getContent());
+		model.addAttribute("tableUsers", invitation.getContent());
 		model.addAttribute("page", invitation);
-		return "invitation/list::invitationTable";
+		return "user/friends::tableUsers";
 	}
-	/* /user/enviarInvitacion/[[${user.id}]] */
-	@RequestMapping("user/acceptInvitation/{idFr}/{idSender}")
+
+	@RequestMapping("user/accept/{idFr}/{idSender}")
 	public String acceptFriendRequest(Model model, @PathVariable Long idFr, @PathVariable Long idSender) {
 		User reciever = usersService.getCurrentUser();
 		User sender = usersService.getUser(idSender);
 		usersService.acceptFriendRequest(sender, reciever);
 		invitationService.deleteInvitation(sender, reciever, idFr);
-		
-
-		return "redirect:/invitation/list/update";
+		System.out.println(usersService.getCurrentUser().getFriends());
+		return "redirect:/user/friends/";
 	}
 }

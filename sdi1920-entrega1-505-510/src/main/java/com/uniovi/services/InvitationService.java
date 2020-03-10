@@ -13,29 +13,27 @@ import com.uniovi.repositories.InvitationRepository;
 public class InvitationService {
 	@Autowired
 	private InvitationRepository invitationRepository;
-	
+
 	public Page<Invitation> getInvitationsOf(Pageable pageable, String email) {
-		Page<Invitation> invitations = invitationRepository.getInvitationsOf(pageable,email);
+		Page<Invitation> invitations = invitationRepository.getInvitationsOf(pageable, email);
 		return invitations;
 	}
-	
+
 	public void deleteInvitation(User sender, User reciever, Long id) {
 		Invitation i = invitationRepository.findInvitationById(id);
 		sender.removeInvitation(sender, reciever, i);
 		invitationRepository.deleteById(id);
 	}
-	
+
 	public void sendInvitation(User sender, User reciever) {
 		Invitation invitation = new Invitation(sender, reciever);
 		invitationRepository.save(invitation);
 		sender.sendInvitation(sender, reciever, invitation);
 	}
-	
+
 	public Page<Invitation> getFriendRequestsForUser(Pageable pageable, User user) {
-		Page<Invitation> friendRequests = invitationRepository.findAllByUser(pageable, user);
-		return friendRequests;
+		Page<Invitation> invitation = invitationRepository.findAllByUser(pageable, user);
+		return invitation;
 	}
-	
-	
 
 }

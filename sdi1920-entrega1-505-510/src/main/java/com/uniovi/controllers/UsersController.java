@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,6 +71,7 @@ public class UsersController {
 			users = usersService.getUsers(pageable);
 		}
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list";
 	}
@@ -85,6 +85,7 @@ public class UsersController {
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list :: tableUsers";
 	}
@@ -93,10 +94,8 @@ public class UsersController {
 	@RequestMapping("/user/friends")
 	public String getFriends(Pageable pageable, Principal principal, Model model) {
 		Page<User> users = usersService.getFriends(pageable, principal.getName());
-
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
-
 		return "/user/friends";
 	}
 

@@ -23,7 +23,7 @@ public class InsertSampleDataService {
 		User user1 = new User("pediaz@gmail.com", "Pedro", "Díaz");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("lu@gmail.com", "Lucas", "Núñez");
+		User user2 = new User("lu@gmail.com", "Lucia", "Llera");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
 		User user3 = new User("marod@yahoo.es", "María", "Rodríguez");
@@ -77,6 +77,7 @@ public class InsertSampleDataService {
 		usersService.addUser(user11);
 		usersService.addUser(user12);
 		usersService.addUser(user13);
+		
 		usersService.addUser(user14);
 		
 		invitationService.sendInvitation(user1, user2);
@@ -91,6 +92,42 @@ public class InsertSampleDataService {
 		invitationService.sendInvitation(user11, user3);
 		invitationService.sendInvitation(user11, user4);
 		invitationService.sendInvitation(user12, user5);
+		invitationService.sendInvitation(user5, user9);
+		invitationService.sendInvitation(user5, user2);
+		invitationService.sendInvitation(user5, user3);
+		invitationService.sendInvitation(user5, user4);
+		invitationService.sendInvitation(user5, user6);
+		invitationService.sendInvitation(user7, user2);
+		invitationService.sendInvitation(user7, user3);
+		invitationService.sendInvitation(user7, user4);
+		invitationService.sendInvitation(user7, user6);
+		invitationService.sendInvitation(user5, user8);
+		invitationService.sendInvitation(user5, user9);
+		invitationService.sendInvitation(user5, user10);
+		invitationService.sendInvitation(user5, user11);
+		invitationService.sendInvitation(user7, user12);
+		invitationService.sendInvitation(user7, user13);
+		invitationService.sendInvitation(user7, user1);
+		invitationService.sendInvitation(user7, user2);
+		invitationService.sendInvitation(user7, user3);
+		invitationService.sendInvitation(user8, user1);
+		invitationService.sendInvitation(user8, user9);
+		invitationService.sendInvitation(user8, user10);
+		invitationService.sendInvitation(user8, user11);
+		invitationService.sendInvitation(user8, user2);
+		invitationService.sendInvitation(user8, user12);
+		invitationService.sendInvitation(user4, user10);
+		invitationService.sendInvitation(user4, user11);
+		invitationService.sendInvitation(user4, user12);
+		invitationService.sendInvitation(user4, user3);
+		invitationService.sendInvitation(user3, user1);
+		invitationService.sendInvitation(user3, user9);
+		invitationService.sendInvitation(user3, user10);
+		invitationService.sendInvitation(user3, user11);
+		invitationService.sendInvitation(user3, user12);
+		invitationService.sendInvitation(user3, user2);
+		
+		
 	}
 
 }

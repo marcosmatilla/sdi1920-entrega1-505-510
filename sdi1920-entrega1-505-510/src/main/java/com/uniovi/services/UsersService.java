@@ -72,15 +72,11 @@ public class UsersService {
 	public Page<User> getFriends(Pageable pageable, String user) {
 		return usersRepository.getFriendsOf(pageable, user);
 	}
-	
+
 	public void acceptFriendRequest(User sender, User reciever) {
 		sender.acceptInvitation(sender, reciever);
 	}
-	
-	/**
-	 * Devuelve el usuario con sesión iniciada en el sistema.
-	 * @return
-	 */
+
 	public User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();

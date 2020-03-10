@@ -16,13 +16,13 @@
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
 
-		<script> $( "#updateButton" ).click(function() { $("#tableUsers").load('/user/list/update'); }); </script>
+		<script> $( "#updateButton" ).click(function() { $("#tableUsers").load('/user/friends/update'); }); </script>
 
 		<script th:inline="javascript">
 			$("#updateButton").click(function() {	 			/*<![CDATA[*/
-				$("#tableUsers").load('/user/list/update');				$( "#updateButton" ).click(function() {
+				$("#tableUsers").load('/user/friends/update');				$( "#updateButton" ).click(function() {
 			});					 var numberPage = [[${param.page}]];
-				 var urlUpdate = '/user/list/update';
+				 var urlUpdate = '/user/friends/update';
 				 if (numberPage != null ){
 				 urlUpdate += "?page="+numberPage[0];
 				 }
@@ -51,23 +51,25 @@
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
 						<td>
-							<!-- PONER UN SWITCH PARA DESCOMENTAR EL BOTÓN DE ABAJO EN EL QUE CUADNO SE DE AL BOTÓN DE ARRIBA SE CAMBIE -->
-							<button type="button" th:id="${'fRButton' + user.id}"
-								class="btn btn-info">
-								<span th:id="${'buttonText' + user.id}">Añadir amigo</span>
-							</button>
+							<div th:switch="${activeUser.checkFriendStatus(user)}">
+								<button th:case="'NOT_FRIENDS'" type="button"
+									th:id="${'invitationButton' + user.id}" class="btn btn-info">
+									<span th:id="${'buttonText' + user.id}">Enviar solicitud</span>
+								</button>
 
-							<!-- <button type="button" th:id="${'fRButton' + user.id}"
-								class="btn btn-info">
-								<span th:id="${'buttonText' + user.id}">Enviada</span> -->
-								
-							</button> <script th:inline="javascript">
+								<button th:case="'REQUEST_SENT'" disabled="true" type="button"
+									th:id="${'invitationButton' + user.id}" class="btn btn-info">
+									<span th:id="${'buttonText' + user.id}">Enviada</span>
+								</button>
+								<script th:inline="javascript">
 								  /*<![CDATA[*/
-								  $( "#fRButton[[${user.id}]]" ).click(function() {
-	                                  $("#tableUsers").load("/user/enviarInvitacion/[[${user.id}]]");
+								  $( "#invitationButton[[${user.id}]]" ).click(function() {
+	                                  $("#tableUsers").load("/user/send/[[${user.id}]]");
 								  });
 								  /*]]>*/
 								</script>
+
+							</div>
 
 						</td>
 					</tr>
