@@ -38,7 +38,6 @@ public class InvitationService {
 	public void sendInvitation(String sender_email, Long receiver_id) {
 		User receiver = usersRepository.findUserById(receiver_id);
 		User sender = usersRepository.findByEmail(sender_email);
-
 		invitationRepository.save(new Invitation(sender, receiver));
 
 	}

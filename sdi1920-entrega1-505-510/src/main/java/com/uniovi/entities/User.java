@@ -147,8 +147,8 @@ public class User {
 	 * @param invitation
 	 */
 	public void sendInvitation(User sender, User reciever, Invitation invitation) {
-		System.out.println(sender.getSendedInvitations().add(invitation) + " SEND");
-		System.out.println(reciever.getReceivedInvitations().add(invitation) + " SEND");
+		sender.getSendedInvitations().add(invitation);
+		reciever.getReceivedInvitations().add(invitation);
 	}
 
 	/**
@@ -168,6 +168,7 @@ public class User {
 
 	/**
 	 * Acepta petición de amistad.
+	 * 
 	 * @param sender
 	 * @param receiver
 	 */
@@ -175,23 +176,22 @@ public class User {
 		sender.getFriends().add(receiver);
 		receiver.getFriends().add(sender);
 	}
-	
+
 	/**
 	 * Comprueba si el usuario a enviado petición ya
+	 * 
 	 * @param receiver
 	 * @return
 	 */
 	public boolean existInvitation(User receiver) {
-		for(Invitation i: getSendedInvitations()) {
-			if(i.getReceiver().equals(receiver)) {
-				System.out.println("Exist invitación en true");
+		for (Invitation i : getSendedInvitations()) {
+			if (i.getReceiver().equals(receiver)) {
 				return true;
 			}
 		}
-		System.out.println("Exist invitación en false");
 		return false;
 	}
-	
+
 	/**
 	 * Comprueba si el usuario actual es amigo del usuario pasado por parámetro.
 	 * 
@@ -200,16 +200,12 @@ public class User {
 	 */
 	public String checkFriendStatus(User user) {
 		if (this.equals(user) || friends.contains(user)) {
-			System.out.println("FRIENDS");
 			return "FRIENDS";
 		}
 		if (existInvitation(user)) {
-			System.out.println("REQUEST_SENT");
 			return "REQUEST_SENT";
 		}
-		System.out.println("NOT_FRIENDS");
 		return "NOT_FRIENDS";
 	}
-	
-	
+
 }

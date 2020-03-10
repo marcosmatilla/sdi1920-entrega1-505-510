@@ -38,8 +38,6 @@
 						<th class="col-md-1">Email</th>
 						<th class="col-md-1">Nombre</th>
 						<th class="col-md-1">Apellidos</th>
-
-
 					</tr>
 				</thead>
 				<tbody>
@@ -47,20 +45,14 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
-
-
 						<td>
 							<div th:switch="${activeUser.checkFriendStatus(user)}">
-
 								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }">Enviar</a>
-
 								<a th:case="'REQUEST_SENT'" disabled="true"
 									th:href="${'/user/send/' + user.id }">Enviada</a>
-
 							</div>
 						</td>
 					</tr>
-
 				</tbody>
 			</table>
 		</div>

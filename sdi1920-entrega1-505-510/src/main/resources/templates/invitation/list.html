@@ -22,16 +22,6 @@
 						<td th:text="${invitation.sender.getEmail()}"></td>
 						<td><a
 							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}">Aceptar</a></td>
-						<!--  NO usar de mometo (va entre td) <button type="button" th:id="${'fRButton' + invitation.id}"
-								class="btn btn-info">Aceptar</button>
-							<script th:inline="javascript">
-								 /*<![CDATA[*/
-								  
-								 $( "#fRButton[[${invitation.id}]]" ).click(function() {
-	                                 $("#invitationTable").load("/user/accept/[[${invitation.id}]]");
-								 });
-								 /*]]>*/
-							</script> -->
 					</tr>
 				</tbody>
 			</table>
