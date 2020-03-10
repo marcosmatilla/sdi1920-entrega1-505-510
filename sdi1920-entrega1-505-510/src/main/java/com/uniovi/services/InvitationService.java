@@ -20,7 +20,7 @@ public class InvitationService {
 	}
 	
 	public void deleteInvitation(User sender, User reciever, Long id) {
-		Invitation i = invitationRepository.findInvitation(id);
+		Invitation i = invitationRepository.findInvitationById(id);
 		sender.removeInvitation(sender, reciever, i);
 		invitationRepository.deleteById(id);
 	}
@@ -29,6 +29,11 @@ public class InvitationService {
 		Invitation invitation = new Invitation(sender, reciever);
 		invitationRepository.save(invitation);
 		sender.sendInvitation(sender, reciever, invitation);
+	}
+	
+	public Page<Invitation> getFriendRequestsForUser(Pageable pageable, User user) {
+		Page<Invitation> friendRequests = invitationRepository.findAllByUser(pageable, user);
+		return friendRequests;
 	}
 	
 	

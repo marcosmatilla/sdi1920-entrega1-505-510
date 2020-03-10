@@ -9,11 +9,12 @@ import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 
 public interface InvitationRepository extends CrudRepository<Invitation, Long> {
-	Invitation findInvitation(Long id);
+	@Query("SELECT i FROM Invitation i WHERE i.id = ?1")
+	Invitation findInvitationById(Long id);
 
 	@Query("SELECT i FROM Invitation i WHERE i.receiver.email = ?1")
 	Page<Invitation> getInvitationsOf(Pageable pageable, String email);
-	
-	@Query("SELECT r FROM FriendRequest r WHERE r.reciever = ?1 ORDER BY r.id ASC ")
+
+	@Query("SELECT r FROM Invitation r WHERE r.receiver = ?1 ORDER BY r.id ASC ")
 	Page<Invitation> findAllByUser(Pageable pageable, User user);
 }

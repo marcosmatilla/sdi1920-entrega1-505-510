@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,4 +72,16 @@ public class UsersService {
 	public Page<User> getFriends(Pageable pageable, String user) {
 		return usersRepository.getFriendsOf(pageable, user);
 	}
+	
+	/**
+	 * Devuelve el usuario con sesión iniciada en el sistema.
+	 * @return
+	 */
+	public User getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = getUserByEmail(email);
+		return activeUser;
+	}
+
 }
