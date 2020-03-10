@@ -21,7 +21,7 @@ public class User {
 	private String lastName;
 	private String password;
 
-	@Transient // propiedad que no se almacena e la tabla.
+	@Transient
 	private String passwordConfirm;
 
 	private String role;
