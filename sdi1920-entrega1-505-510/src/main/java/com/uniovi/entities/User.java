@@ -113,4 +113,82 @@ public class User {
 		return role;
 	}
 
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<Invitation> getReceivedInvitations() {
+		return receivedInvitations;
+	}
+
+	public void setReceivedInvitations(Set<Invitation> receivedInvitations) {
+		this.receivedInvitations = receivedInvitations;
+	}
+
+	public Set<Invitation> getSendedInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendedInvitations(Set<Invitation> sendedInvitations) {
+		this.sendedInvitations = sendedInvitations;
+	}
+
+	/**
+	 * Añade petición de amistad a la lista de peticiones enviadas del usuario que
+	 * la envia y a la lista de peticiones recibidas del usuario que recibe la
+	 * petición
+	 * 
+	 * @param sender
+	 * @param reciever
+	 * @param invitation
+	 */
+	public void sendInvitation(User sender, User reciever, Invitation invitation) {
+		sender.getSendedInvitations().add(invitation);
+		reciever.getReceivedInvitations().add(invitation);
+	}
+
+	/**
+	 * Elimina petición de amistad de la lista de enviadas del que la envia y de la
+	 * recibida del que la recibe.
+	 * 
+	 * @param sender
+	 * @param reciever
+	 * @param invitation
+	 */
+	public void removeInvitation(User sender, User reciever, Invitation invitation) {
+		sender.getSendedInvitations().remove(invitation);
+		reciever.getReceivedInvitations().remove(invitation);
+		invitation.setSender(null);
+		invitation.setReceiver(null);
+	}
+
+	/**
+	 * Acepta petición de amistad.
+	 * @param sender
+	 * @param receiver
+	 */
+	public void acceptInvitation(User sender, User receiver) {
+		sender.getFriends().add(receiver);
+		receiver.getFriends().add(sender);
+	}
+	
+	/**
+	 * Comprueba si el usuario a enviado petición ya
+	 * @param receiver
+	 * @return
+	 */
+	public boolean existInvitation(User receiver) {
+		for(Invitation i: getSendedInvitations()) {
+			if(i.getReceiver().equals(receiver)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 }

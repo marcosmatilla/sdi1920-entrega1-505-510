@@ -7,10 +7,10 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2>Lista invitaciones</h2>
+		<h2>Invitaciones</h2>
 		<div class="table-responsive">
-			<table class="table table-hover" th:fragment="tableInvitations"
-				id="tableInvitations">
+			<table class="table table-hover" th:fragment="invitationTable"
+				id="invitationTable">
 				<thead>
 					<tr>
 						<th class="col-md-1" th:text="#{list.name}"></th>
@@ -19,20 +19,20 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="friendRequest : ${friendRequestList}">
-						<td th:text="${friendRequest.sender.getName()}"></td>
-						<td th:text="${friendRequest.sender.getEmail()}"></td>
+					<tr th:each="invitation : ${invitationList}">
+						<td th:text="${invitation.sender.getName()}"></td>
+						<td th:text="${invitation.sender.getEmail()}"></td>
 						<td>
-							<!-- <button type="button" th:id="${'fRButton' + friendRequest.id}"
-								class="btn btn-info" th:text="#{accept.message}"></button>
+							<button type="button" th:id="${'fRButton' + invitation.id}"
+								class="btn btn-info">Aceptar</button>
 							<script th:inline="javascript">
 								 /*<![CDATA[*/
 								  
-								 $( "#fRButton[[${friendRequest.id}]]" ).click(function() {
-	                                 $("#tableFriendRequest").load("/user/acceptFR/[[${friendRequest.id}]]/[[${friendRequest.sender.getId()}]]");
+								 $( "#fRButton[[${invitation.id}]]" ).click(function() {
+	                                 $("#invitationTable").load("/user/accept/[[${invitation.id}]]/[[${invitation.sender.getId()}]]");
 								 });
 								 /*]]>*/
-							</script> EJEMPLO DEL BOTON-->
+							</script>
 						</td>
 					</tr>
 				</tbody>

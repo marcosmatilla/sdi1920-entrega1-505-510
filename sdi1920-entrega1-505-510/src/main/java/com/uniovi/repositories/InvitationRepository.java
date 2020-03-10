@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.uniovi.entities.Invitation;
+import com.uniovi.entities.User;
 
 public interface InvitationRepository extends CrudRepository<Invitation, Long> {
+	Invitation findInvitation(Long id);
 
 	@Query("SELECT i FROM Invitation i WHERE i.receiver.email = ?1")
 	Page<Invitation> getInvitationsOf(Pageable pageable, String email);
-
+	
+	@Query("SELECT r FROM FriendRequest r WHERE r.reciever = ?1 ORDER BY r.id ASC ")
+	Page<Invitation> findAllByUser(Pageable pageable, User user);
 }
