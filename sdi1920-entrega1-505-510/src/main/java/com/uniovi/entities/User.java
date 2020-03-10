@@ -31,9 +31,6 @@ public class User {
 	private String password;
 	@Transient
 	private String passwordConfirm;
-	
-	/* Pruebas enviar invitaciones */
-	private Boolean resend = false;
 
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
@@ -114,15 +111,6 @@ public class User {
 
 	public String getRole() {
 		return role;
-	}
-
-	/* Pruebas enviar invitaciones */
-	public Boolean getResend() {
-		return resend;
-	}
-
-	public void setResend(Boolean resend) {
-		this.resend = resend;
 	}
 
 }

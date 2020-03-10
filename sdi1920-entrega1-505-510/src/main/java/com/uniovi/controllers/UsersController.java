@@ -100,17 +100,4 @@ public class UsersController {
 		return "/user/friends";
 	}
 
-	/* Enviar invitaciones */
-	@RequestMapping(value = "/user/{id}/resend", method = RequestMethod.GET)
-	public String setResendTrue(Model model, @PathVariable Long id) {
-		usersService.setUserResend(true, id);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping(value = "/user/{id}/noresend", method = RequestMethod.GET)
-	public String setResendFalse(Model model, @PathVariable Long id) {
-		usersService.setUserResend(false, id);
-		return "redirect:/user/list";
-	}
-
 }
