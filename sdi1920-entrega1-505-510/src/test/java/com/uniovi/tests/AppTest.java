@@ -11,10 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
@@ -81,6 +78,9 @@ public class AppTest {
 		PO_View.checkElement(driver, "text", "marcos@gmail.com");
 
 	}
+	
+	
+	
 
 	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
 	// .... pagination pagination-centered, Error.signup.dni.length
