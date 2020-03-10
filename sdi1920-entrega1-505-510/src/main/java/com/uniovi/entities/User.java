@@ -147,8 +147,9 @@ public class User {
 	 * @param invitation
 	 */
 	public void sendInvitation(User sender, User reciever, Invitation invitation) {
-		sender.getSendedInvitations().add(invitation);
-		reciever.getReceivedInvitations().add(invitation);
+		System.out.println(sender.getSendedInvitations().add(invitation) + "SEND");
+		System.out.println(reciever.getReceivedInvitations().add(invitation) + "SEND");
+		
 	}
 
 	/**
@@ -184,9 +185,11 @@ public class User {
 	public boolean existInvitation(User receiver) {
 		for(Invitation i: getSendedInvitations()) {
 			if(i.getReceiver().equals(receiver)) {
+				System.out.println("Exist invitación en true");
 				return true;
 			}
 		}
+		System.out.println("Exist invitación en false");
 		return false;
 	}
 	
@@ -197,11 +200,15 @@ public class User {
 	 * @return true si son amigos o es él mismo, false si no lo son
 	 */
 	public String checkFriendtatus(User user) {
-		if (this.equals(user) || friends.contains(user))
+		if (this.equals(user) || friends.contains(user)) {
+			System.out.println("FRIENDS");
 			return "FRIENDS";
-		if (existInvitation(user))
+		}
+		if (existInvitation(user)) {
+			System.out.println("REQUEST_SENT");
 			return "REQUEST_SENT";
-
+		}
+		System.out.println("NOT_FRIENDS");
 		return "NOT_FRIENDS";
 	}
 	

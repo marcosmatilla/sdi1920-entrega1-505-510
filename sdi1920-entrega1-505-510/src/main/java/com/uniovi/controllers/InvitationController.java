@@ -24,8 +24,9 @@ public class InvitationController {
 	@RequestMapping("/invitation/list")
 	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
+		System.out.println("getList de invitation controller" + user + "usuario");
 		Page<Invitation> invitation = invitationService.getFriendRequestsForUser(pageable, user);
-		model.addAttribute("invitationTable", invitation.getContent());
+		model.addAttribute("invitationList", invitation.getContent());
 		model.addAttribute("page", invitation);
 		return "invitation/list";
 	}
@@ -34,9 +35,10 @@ public class InvitationController {
 	public String updateList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
 		Page<Invitation> invitation = invitationService.getFriendRequestsForUser(pageable, user);
-		model.addAttribute("invitationTable", invitation.getContent());
+		System.out.println("invittion controller" + invitation);
+		model.addAttribute("invitationList", invitation.getContent());
 		model.addAttribute("page", invitation);
-		return "invitation/list :: invitationTable";
+		return "invitation/list::invitationTable";
 	}
 	/* /user/enviarInvitacion/[[${user.id}]] */
 	@RequestMapping("user/acceptInvitation/{idFr}/{idSender}")
