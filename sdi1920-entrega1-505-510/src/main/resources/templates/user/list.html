@@ -15,17 +15,14 @@
 		</form>
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
-		<!--<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
-		  <script>
-			$("#updateButton").click(function() {
-				$("#tableUsers").load('/user/list/update');
-			});
-		</script> -->
+
+		<script> $( "#updateButton" ).click(function() { $("#tableUsers").load('/user/friends/update'); }); </script>
+
 		<script th:inline="javascript">
 			$("#updateButton").click(function() {	 			/*<![CDATA[*/
-				$("#tableUsers").load('/user/list/update');				$( "#updateButton" ).click(function() {
+				$("#tableUsers").load('/user/friends/update');				$( "#updateButton" ).click(function() {
 			});					 var numberPage = [[${param.page}]];
-				 var urlUpdate = '/user/list/update';
+				 var urlUpdate = '/user/friends/update';
 				 if (numberPage != null ){
 				 urlUpdate += "?page="+numberPage[0];
 				 }
@@ -38,13 +35,9 @@
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th>Email</th>
-						<th>Nombre</th>
-						<th>Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-
+						<th class="col-md-1">Email</th>
+						<th class="col-md-1">Nombre</th>
+						<th class="col-md-1">Apellidos</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,6 +45,13 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						<td>
+							<div th:switch="${activeUser.checkFriendStatus(user)}">
+								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }">Enviar</a>
+								<a th:case="'REQUEST_SENT'" disabled="true"
+									th:href="${'/user/send/' + user.id }">Enviada</a>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

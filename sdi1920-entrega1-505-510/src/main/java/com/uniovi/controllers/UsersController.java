@@ -71,6 +71,7 @@ public class UsersController {
 			users = usersService.getUsers(pageable);
 		}
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list";
 	}
@@ -84,8 +85,18 @@ public class UsersController {
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list :: tableUsers";
+	}
+
+	/* PARA LOS AMIGOS */
+	@RequestMapping("/user/friends")
+	public String getFriends(Pageable pageable, Principal principal, Model model) {
+		Page<User> users = usersService.getFriends(pageable, principal.getName());
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "/user/friends";
 	}
 
 }
