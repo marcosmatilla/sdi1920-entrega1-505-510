@@ -48,8 +48,10 @@
 						<td>
 							<div th:switch="${activeUser.checkFriendStatus(user)}">
 								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }">Enviar</a>
-								<a th:case="'REQUEST_SENT'" disabled="true"
-									th:href="${'/user/send/' + user.id }">Enviada</a>
+								<p th:case="'REQUEST_SENT'" th:disabled="true">Enviada</p>
+								<p th:case="'FRIENDS'" th:disabled="true">Aceptado</p>
+									
+									
 							</div>
 						</td>
 					</tr>
