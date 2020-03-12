@@ -70,6 +70,9 @@ public class AppTest {
 
 	// Requisitos obligatorios
 
+	// Público: registrare como usuario
+	// Prueba 1 a 4
+
 	// [Prueba1] Registro de Usuario con datos válidos.
 	@Test
 	public void PR01() {
@@ -130,8 +133,55 @@ public class AppTest {
 		PO_RegisterView.fillForm(driver, "marcos@gmail.com", "Josefo", "Perez", "77777", "77777");
 		// Comprobamos el error del correo ya existente
 		PO_RegisterView.checkKey(driver, "Error.signup.mail.duplicate", PO_Properties.getSPANISH());
-		
 
+	}
+
+	/**
+	 * [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email
+	 * y contraseña vacíos). [Prueba8] Inicio de sesión con datos válidos (usuario
+	 * estándar, email existente, pero contraseña incorrecta).
+	 */
+
+	// Usuario registrado: inicio de sesión
+
+	// [Prueba5] Inicio de sesión con datos válidos (administrador).
+	@Test
+	public void PR05() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "admin@email.com");
+
+	}
+
+	// [Prueba6] Inicio de sesión con datos válidos (usuario estándar).
+	@Test
+	public void PR06() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
+	}
+
+	// [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email
+	// y contraseña vacíos).
+	@Test
+	public void PR07() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "", "123456");
+		// Comprobamos el error del correo ya existente
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
+
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "");
+		// Comprobamos el error del correo ya existente
+		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
 	}
 
 	// PR08. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
@@ -145,20 +195,45 @@ public class AppTest {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 	}
 
+	// Usuario Registrado: Fin de sesión
+	// [Prueba9] Hacer click en la opción de salir de sesión y comprobar que se
+	// redirige a la página de inicio de sesión (Login)
+
 	@Test
 	public void PR09() {
+		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "99999988F", "123456");
-		PO_View.checkElement(driver, "text", "Notas del usuario");
+
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		PO_View.checkElement(driver, "text", "Identifícate");
+
 	}
+
+	// [Prueba10] Comprobar que el botón cerrar sesión no está visible si el usuario
+	// no está autenticado.
 
 	@Test
 	public void PR10() {
+		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "99999988F", "xxxxxx");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Notas del usuario", PO_View.getTimeout());
+
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
 	}
 
+	
+	// [Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el
+	// sistema.
 	@Test
 	public void PR11() {
 		// Vamos al formulario de logueo.
