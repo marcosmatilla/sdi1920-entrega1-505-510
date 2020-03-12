@@ -29,12 +29,6 @@ public class InvitationService {
 		invitationRepository.deleteById(id);
 	}
 
-//	public void sendInvitation(User sender, User reciever) {
-//		Invitation invitation = new Invitation(sender, reciever);
-//		invitationRepository.save(invitation);
-//		sender.sendInvitation(sender, reciever, invitation);
-//	}
-
 	public void sendInvitation(String sender_email, Long receiver_id) {
 		User receiver = usersRepository.findUserById(receiver_id);
 		User sender = usersRepository.findByEmail(sender_email);
