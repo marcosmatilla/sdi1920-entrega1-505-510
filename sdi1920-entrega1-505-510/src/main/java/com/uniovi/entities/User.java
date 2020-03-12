@@ -31,6 +31,9 @@ public class User {
 	private String password;
 	@Transient
 	private String passwordConfirm;
+	
+	@Transient
+	private boolean send;
 
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
@@ -200,11 +203,14 @@ public class User {
 	 */
 	public String checkFriendStatus(User user) {
 		if (this.equals(user) || friends.contains(user)) {
+			send = true;
 			return "FRIENDS";
 		}
 		if (existInvitation(user)) {
+			send = true;
 			return "REQUEST_SENT";
 		}
+		send = false;
 		return "NOT_FRIENDS";
 	}
 

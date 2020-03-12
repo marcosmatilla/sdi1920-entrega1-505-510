@@ -66,8 +66,8 @@ public class UsersService {
 		return users;
 	}
 
-	public Page<User> getUsers(Pageable pageable) {
-		return usersRepository.findAllByRole(pageable, "ROLE_PUBLIC");
+	public Page<User> getUsers(Pageable pageable, String email) {
+		return usersRepository.findAll(pageable, email, "ROLE_PUBLIC");
 	}
 
 	public Page<User> getFriends(Pageable pageable, String user) {
@@ -77,7 +77,7 @@ public class UsersService {
 	public void acceptFriendRequest(User sender, User reciever) {
 		sender.acceptInvitation(sender, reciever);
 	}
-	
+
 	public void sendFriendRequest(User sender, User reciever, Invitation invitation) {
 		sender.sendInvitation(sender, reciever, invitation);
 	}
