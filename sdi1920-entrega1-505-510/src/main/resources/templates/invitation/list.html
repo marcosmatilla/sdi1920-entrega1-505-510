@@ -5,14 +5,14 @@
 	<!-- Barra de NavegaciÃ³n superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Invitaciones</h2>
+		<h2 th:text="#{invitation.list.tittle}"></h2>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="invitationTable"
 				id="invitationTable">
 				<thead>
 					<tr>
-						<th class="col-md-1">Nombre</th>
-						<th class="col-md-1">Email</th>
+						<th class="col-md-1" th:text="#{invitation.list.name}">Nombre</th>
+						<th class="col-md-1" th:text="#{invitation.list.email}">Email</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,7 +21,7 @@
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
 						<td><a
-							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}">Aceptar</a></td>
+							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}" th:text="#{invitation.list.aceptar}">Aceptar</a></td>
 					</tr>
 				</tbody>
 			</table>
