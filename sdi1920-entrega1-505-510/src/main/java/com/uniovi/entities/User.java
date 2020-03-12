@@ -1,9 +1,17 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,12 +27,23 @@ public class User {
 
 	private String name;
 	private String lastName;
+	private String role;
 	private String password;
-
 	@Transient
 	private String passwordConfirm;
+	
+	@Transient
+	private boolean send;
 
-	private String role;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
+	private Set<User> friends = new HashSet<User>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Invitation> receivedInvitations = new HashSet<Invitation>();
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Invitation> sendedInvitations = new HashSet<Invitation>();
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -34,6 +53,7 @@ public class User {
 	}
 
 	public User() {
+
 	}
 
 	public long getId() {
@@ -95,4 +115,103 @@ public class User {
 	public String getRole() {
 		return role;
 	}
+
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<Invitation> getReceivedInvitations() {
+		return receivedInvitations;
+	}
+
+	public void setReceivedInvitations(Set<Invitation> receivedInvitations) {
+		this.receivedInvitations = receivedInvitations;
+	}
+
+	public Set<Invitation> getSendedInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendedInvitations(Set<Invitation> sendedInvitations) {
+		this.sendedInvitations = sendedInvitations;
+	}
+
+	/**
+	 * Añade petición de amistad a la lista de peticiones enviadas del usuario que
+	 * la envia y a la lista de peticiones recibidas del usuario que recibe la
+	 * petición
+	 * 
+	 * @param sender
+	 * @param reciever
+	 * @param invitation
+	 */
+	public void sendInvitation(User sender, User reciever, Invitation invitation) {
+		sender.getSendedInvitations().add(invitation);
+		reciever.getReceivedInvitations().add(invitation);
+	}
+
+	/**
+	 * Elimina petición de amistad de la lista de enviadas del que la envia y de la
+	 * recibida del que la recibe.
+	 * 
+	 * @param sender
+	 * @param reciever
+	 * @param invitation
+	 */
+	public void removeInvitation(User sender, User reciever, Invitation invitation) {
+		sender.getSendedInvitations().remove(invitation);
+		reciever.getReceivedInvitations().remove(invitation);
+		invitation.setSender(null);
+		invitation.setReceiver(null);
+	}
+
+	/**
+	 * Acepta petición de amistad.
+	 * 
+	 * @param sender
+	 * @param receiver
+	 */
+	public void acceptInvitation(User sender, User receiver) {
+		sender.getFriends().add(receiver);
+		receiver.getFriends().add(sender);
+	}
+
+	/**
+	 * Comprueba si el usuario a enviado petición ya
+	 * 
+	 * @param receiver
+	 * @return
+	 */
+	public boolean existInvitation(User receiver) {
+		for (Invitation i : getSendedInvitations()) {
+			if (i.getReceiver().equals(receiver)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Comprueba si el usuario actual es amigo del usuario pasado por parámetro.
+	 * 
+	 * @param user
+	 * @return true si son amigos o es él mismo, false si no lo son
+	 */
+	public String checkFriendStatus(User user) {
+		if (this.equals(user) || friends.contains(user)) {
+			send = true;
+			return "FRIENDS";
+		}
+		if (existInvitation(user)) {
+			send = true;
+			return "REQUEST_SENT";
+		}
+		send = false;
+		return "NOT_FRIENDS";
+	}
+
 }

@@ -4,27 +4,30 @@
 <body>
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Idéntificate</h2>
+		<h2 th:text="#{login.welcome}"></h2>
 		<form class="form-horizontal" method="post" action="/login">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="username">Mail:</label>
+				<label class="control-label col-sm-2" for="username"><span
+								th:text="#{login.email}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="username"
-						placeholder="Ejemplo: xxxxx@gmail.com" />
+						th:placeholder= "#{login.example.email}" required="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="username">Password:</label>
+				<label class="control-label col-sm-2" for="username"><span
+								th:text="#{login.pass}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="password"
-						placeholder="Entre el Password"/> <span
+						th:placeholder="#{login.example.pass}" required="true" /> <span
 						class="text-danger" th:if="${error!=null}"
 						th:text="#{Error.login}" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary">Login</button>
+					<button type="submit" class="btn btn-primary"><span
+								th:text="#{btn.login}"></span></button>
 				</div>
 			</div>
 			<input type="hidden" name="${_csrf.parameterName}"

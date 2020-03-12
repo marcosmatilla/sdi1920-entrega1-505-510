@@ -57,20 +57,24 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, String error) {
+		if(error!=null) {
+			model.addAttribute("error", error);
+		}
 		return "login";
 	}
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
-			@RequestParam(value = "", required = false) String searchText) {
+			@RequestParam(value = "", required = false) String searchText, Principal principal) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		if (searchText != null && !searchText.isEmpty()) {
 			users = usersService.searchUsersByEmailAndName(pageable, searchText);
 		} else {
-			users = usersService.getUsers(pageable);
+			users = usersService.getUsers(pageable, principal.getName());
 		}
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list";
 	}
@@ -82,10 +86,20 @@ public class UsersController {
 
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
-		Page<User> users = usersService.getUsers(pageable);
+		Page<User> users = usersService.getUsers(pageable, principal.getName());
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list :: tableUsers";
+	}
+
+	/* PARA LOS AMIGOS */
+	@RequestMapping("/user/friends")
+	public String getFriends(Pageable pageable, Principal principal, Model model) {
+		Page<User> users = usersService.getFriends(pageable, principal.getName());
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "/user/friends";
 	}
 
 }

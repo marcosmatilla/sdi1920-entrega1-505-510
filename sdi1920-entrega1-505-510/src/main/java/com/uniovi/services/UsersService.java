@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -63,8 +66,27 @@ public class UsersService {
 		return users;
 	}
 
-	public Page<User> getUsers(Pageable pageable) {
-		return usersRepository.findAllByRole(pageable, "ROLE_PUBLIC");
+	public Page<User> getUsers(Pageable pageable, String email) {
+		return usersRepository.findAll(pageable, email, "ROLE_PUBLIC");
+	}
+
+	public Page<User> getFriends(Pageable pageable, String user) {
+		return usersRepository.getFriendsOf(pageable, user);
+	}
+
+	public void acceptFriendRequest(User sender, User reciever) {
+		sender.acceptInvitation(sender, reciever);
+	}
+
+	public void sendFriendRequest(User sender, User reciever, Invitation invitation) {
+		sender.sendInvitation(sender, reciever, invitation);
+	}
+
+	public User getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = getUserByEmail(email);
+		return activeUser;
 	}
 
 }

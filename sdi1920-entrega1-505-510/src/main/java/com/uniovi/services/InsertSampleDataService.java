@@ -1,11 +1,16 @@
 package com.uniovi.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.InvitationRepository;
 
 @Service
 public class InsertSampleDataService {
@@ -14,13 +19,16 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private RolesService rolesService;
+	
+	@Autowired
+	private InvitationRepository invitationRepository;
 
 	@PostConstruct
 	public void init() {
 		User user1 = new User("pediaz@gmail.com", "Pedro", "Díaz");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("lu@gmail.com", "Lucas", "Núñez");
+		User user2 = new User("lu@gmail.com", "Lucia", "Llera");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
 		User user3 = new User("marod@yahoo.es", "María", "Rodríguez");
@@ -74,7 +82,109 @@ public class InsertSampleDataService {
 		usersService.addUser(user11);
 		usersService.addUser(user12);
 		usersService.addUser(user13);
+		
 		usersService.addUser(user14);
+		
+		user1.getFriends().add(user2);
+		user1.getFriends().add(user3);
+		user1.getFriends().add(user4);
+		user1.getFriends().add(user5);
+		user1.getFriends().add(user6);
+		user1.getFriends().add(user7);
+		user1.getFriends().add(user8);
+		user1.getFriends().add(user9);
+		user1.getFriends().add(user10);
+		user1.getFriends().add(user11);
+		user1.getFriends().add(user12);
+		user1.getFriends().add(user13);
+		user2.getFriends().add(user1);
+		user2.getFriends().add(user3);
+		user2.getFriends().add(user4);
+		user2.getFriends().add(user5);
+		user2.getFriends().add(user6);
+		user2.getFriends().add(user7);
+		user2.getFriends().add(user8);
+		user2.getFriends().add(user9);
+		user2.getFriends().add(user10);
+		user2.getFriends().add(user11);
+		user2.getFriends().add(user12);
+		user2.getFriends().add(user13);
+		user3.getFriends().add(user1);
+		user3.getFriends().add(user2);
+		user3.getFriends().add(user4);
+		user3.getFriends().add(user5);
+		user3.getFriends().add(user6);
+		user3.getFriends().add(user7);
+		user3.getFriends().add(user8);
+		user3.getFriends().add(user9);
+		user3.getFriends().add(user10);
+		user3.getFriends().add(user11);
+		user3.getFriends().add(user12);
+		user3.getFriends().add(user13);
+		user4.getFriends().add(user1);
+		user4.getFriends().add(user2);
+		user4.getFriends().add(user3);
+		user4.getFriends().add(user5);
+		user4.getFriends().add(user6);
+		user4.getFriends().add(user7);
+		user4.getFriends().add(user8);
+		user4.getFriends().add(user9);
+		user4.getFriends().add(user10);
+		user4.getFriends().add(user11);
+		user4.getFriends().add(user12);
+		user4.getFriends().add(user13);
+		user5.getFriends().add(user1);
+		user5.getFriends().add(user2);
+		user5.getFriends().add(user3);
+		user5.getFriends().add(user4);
+		user5.getFriends().add(user6);
+		user5.getFriends().add(user7);
+		user5.getFriends().add(user8);
+		user5.getFriends().add(user9);
+		user5.getFriends().add(user10);
+		user5.getFriends().add(user11);
+		user5.getFriends().add(user12);
+		user5.getFriends().add(user13);
+		user6.getFriends().add(user1);
+		user6.getFriends().add(user2);
+		user6.getFriends().add(user3);
+		user6.getFriends().add(user4);
+		user6.getFriends().add(user5);
+		user6.getFriends().add(user7);
+		user6.getFriends().add(user8);
+		user6.getFriends().add(user9);
+		user6.getFriends().add(user10);
+		user6.getFriends().add(user11);
+		user6.getFriends().add(user12);
+		user6.getFriends().add(user13);
+		
+		List<Invitation> invitaciones = new ArrayList<Invitation>() {
+			{
+				add(new Invitation(user1,user3));
+				add(new Invitation(user7,user1));
+				add(new Invitation(user8,user1));
+				add(new Invitation(user9,user1));
+				add(new Invitation(user10,user1));
+				add(new Invitation(user1,user2));
+				add(new Invitation(user1,user5));
+				add(new Invitation(user1,user6));
+				add(new Invitation(user1,user7));
+				add(new Invitation(user1,user8));
+				add(new Invitation(user2,user3));
+				add(new Invitation(user2,user5));
+				add(new Invitation(user2,user6));
+				add(new Invitation(user2,user7));
+				add(new Invitation(user2,user8));
+				add(new Invitation(user3,user4));
+				add(new Invitation(user3,user5));
+				add(new Invitation(user3,user6));
+				add(new Invitation(user3,user7));
+				add(new Invitation(user3,user8));
+			}
+		};
+		
+		invitationRepository.saveAll(invitaciones);
+		
 	}
 
 }

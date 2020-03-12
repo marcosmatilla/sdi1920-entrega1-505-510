@@ -5,27 +5,25 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Usuarios</h2>
+		<h2 th:text="#{user.list.tittle}">Usuarios</h2>
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por apellido o nombre del usuario">
+					th:placeholder="#{user.list.placeholder}">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default"><span
+								th:text="#{btn.search}"></span></button>
 		</form>
-		<p>Los usuarios que actualmente figuran en el sistema son los
+		<p th:text="#{user.list.long.message}">Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
-		<!--<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
-		  <script>
-			$("#updateButton").click(function() {
-				$("#tableUsers").load('/user/list/update');
-			});
-		</script> -->
+
+		<script> $( "#updateButton" ).click(function() { $("#tableUsers").load('/user/friends/update'); }); </script>
+
 		<script th:inline="javascript">
 			$("#updateButton").click(function() {	 			/*<![CDATA[*/
-				$("#tableUsers").load('/user/list/update');				$( "#updateButton" ).click(function() {
+				$("#tableUsers").load('/user/friends/update');				$( "#updateButton" ).click(function() {
 			});					 var numberPage = [[${param.page}]];
-				 var urlUpdate = '/user/list/update';
+				 var urlUpdate = '/user/friends/update';
 				 if (numberPage != null ){
 				 urlUpdate += "?page="+numberPage[0];
 				 }
@@ -38,13 +36,9 @@
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th>Email</th>
-						<th>Nombre</th>
-						<th>Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-
+						<th class="col-md-1" th:text="#{user.list.email}">Email</th>
+						<th class="col-md-1" th:text="#{user.list.name}">Nombre</th>
+						<th class="col-md-1" th:text="#{user.list.lastName}">Apellidos</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,6 +46,13 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						<td>
+							<div th:switch="${activeUser.checkFriendStatus(user)}">
+								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }" th:text="#{user.list.enviar}">Enviar</a>
+								<p th:case="'REQUEST_SENT'" th:disabled="true" th:text="#{user.list.enviada}">Enviada</p>
+								<p th:case="'FRIENDS'" th:disabled="true" th:text="#{user.list.acept}">Aceptado</p>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
