@@ -57,7 +57,10 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, String error) {
+		if(error!=null) {
+			model.addAttribute("error", error);
+		}
 		return "login";
 	}
 
