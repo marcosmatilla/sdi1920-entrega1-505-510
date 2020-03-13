@@ -21,8 +21,12 @@
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">Email</td>
-						<td th:text="${user.name}">Nombre</td>
+						<td th:text="${user.name}" >Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						<td>
+							<a th:href="${'/post/list/' + user.id}" > Ver Posts</a>
+						</td>
+						
 
 					</tr>
 				</tbody>
