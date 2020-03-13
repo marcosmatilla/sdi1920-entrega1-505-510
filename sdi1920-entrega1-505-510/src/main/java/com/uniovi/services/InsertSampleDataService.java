@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Invitation;
+import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.InvitationRepository;
+import com.uniovi.repositories.PostRepository;
 
 @Service
 public class InsertSampleDataService {
@@ -22,6 +25,9 @@ public class InsertSampleDataService {
 	
 	@Autowired
 	private InvitationRepository invitationRepository;
+	
+	@Autowired
+	private PostRepository postsRepository;
 
 	@PostConstruct
 	public void init() {
@@ -185,6 +191,10 @@ public class InsertSampleDataService {
 		
 		invitationRepository.saveAll(invitaciones);
 		
+		Post post1 = new Post(user1, "Hola", "Buenas");
+		postsRepository.save(post1);
+		
 	}
+
 
 }

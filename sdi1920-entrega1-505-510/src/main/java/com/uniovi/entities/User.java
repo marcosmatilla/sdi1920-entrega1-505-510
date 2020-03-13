@@ -31,7 +31,7 @@ public class User {
 	private String password;
 	@Transient
 	private String passwordConfirm;
-	
+
 	@Transient
 	private boolean send;
 
@@ -44,6 +44,9 @@ public class User {
 
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
 	private Set<Invitation> sendedInvitations = new HashSet<Invitation>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts = new HashSet<Post>();
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -214,4 +217,11 @@ public class User {
 		return "NOT_FRIENDS";
 	}
 
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
 }
