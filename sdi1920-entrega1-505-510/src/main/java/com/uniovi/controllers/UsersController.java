@@ -3,6 +3,8 @@ package com.uniovi.controllers;
 import java.security.Principal;
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +34,8 @@ public class UsersController {
 	private SignUpFormValidator signUpFormValidator;
 	@Autowired
 	private RolesService rolesService;
+	@Autowired
+	private HttpSession httpSession;
 
 	@RequestMapping(value = "/user/add")
 	public String getUser(Model model) {
@@ -61,8 +66,10 @@ public class UsersController {
 		if(error!=null) {
 			model.addAttribute("error", error);
 		}
+		httpSession.setAttribute("login", "/login");
 		return "login";
 	}
+	
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
@@ -86,7 +93,13 @@ public class UsersController {
 
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
-		Page<User> users = usersService.getUsers(pageable, principal.getName());
+		Page<User> users = null;
+		if(!usersService.getUserByEmail(principal.getName()).getRole().equals("ROLE_ADMIN")) {
+			users = usersService.getUsers(pageable, principal.getName());
+		}
+		else {
+			users = usersService.getAllUserForAdmin(pageable, principal.getName());
+		}
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
@@ -102,4 +115,9 @@ public class UsersController {
 		return "/user/friends";
 	}
 
+	@RequestMapping("/user/delete/{id}")
+	public String deleteUser(@PathVariable Long id, Principal principal) {
+		usersService.deleteUser(id);
+		return "redirect:/user/list";
+	}
 }

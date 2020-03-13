@@ -46,12 +46,15 @@
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
-						<td>
+						<td sec:authorize="hasRole('ROLE_PUBLIC')">
 							<div th:switch="${activeUser.checkFriendStatus(user)}">
 								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }" th:text="#{user.list.enviar}">Enviar</a>
 								<p th:case="'REQUEST_SENT'" th:disabled="true" th:text="#{user.list.enviada}">Enviada</p>
 								<p th:case="'FRIENDS'" th:disabled="true" th:text="#{user.list.acept}">Aceptado</p>
 							</div>
+						</td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<a th:href="${'/user/delete/' + user.id}" th:text="#{user.list.admin.eliminar}">Eliminar</a>
 						</td>
 					</tr>
 				</tbody>
