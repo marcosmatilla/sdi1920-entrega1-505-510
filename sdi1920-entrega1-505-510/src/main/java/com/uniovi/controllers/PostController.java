@@ -12,9 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +22,7 @@ import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
 import com.uniovi.services.PostsService;
 import com.uniovi.services.UsersService;
+import com.uniovi.validators.AddPostValidator;
 
 @Controller
 public class PostController {
@@ -32,7 +31,10 @@ public class PostController {
 
 	@Autowired
 	private UsersService usersService;
-
+	
+	@Autowired
+	private AddPostValidator addPostValidator;
+	
 	@RequestMapping("/post/list")
 	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
@@ -59,6 +61,11 @@ public class PostController {
 
 	@RequestMapping(value = "/post/add", method = RequestMethod.POST)
 	public String addPost(Post post, Model model, @RequestParam("image") MultipartFile image, BindingResult result) {
+		addPostValidator.validate(post, result);
+		if(result.hasErrors()) {
+			return "post/add";
+		}
+		post.setHasImage(!image.isEmpty());
 		Post saved = postsService.addPost(post, usersService.getCurrentUser());
 		if(!image.isEmpty()) {
 			saveImage(image,result,saved);
@@ -77,7 +84,6 @@ public class PostController {
 					StandardCopyOption.REPLACE_EXISTING);
 		}catch(IOException e) {
 			e.printStackTrace();
-			result.addError(new ObjectError("image", "Error"));
 		}
 	}
 
