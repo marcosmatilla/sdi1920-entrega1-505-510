@@ -30,12 +30,14 @@
 							<div th:if="${post.hasImage}">
 								<img th:src="${'/fotos/' + post.id + '.jpg'}" th:height="50"
 									th:width="50" />
+
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<p th:text="#{post.list.reload.message}"></p>
 		<footer th:replace="fragments/pagination" />
 	</div>
 
