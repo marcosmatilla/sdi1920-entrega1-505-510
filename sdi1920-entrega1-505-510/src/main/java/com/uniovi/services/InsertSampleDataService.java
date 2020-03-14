@@ -1,6 +1,5 @@
 package com.uniovi.services;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,6 +164,11 @@ public class InsertSampleDataService {
 		user6.getFriends().add(user13);
 		
 		List<Invitation> invitaciones = new ArrayList<Invitation>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				add(new Invitation(user1,user3));
 				add(new Invitation(user7,user1));

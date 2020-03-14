@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.LoggerService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -36,6 +37,8 @@ public class UsersController {
 	private RolesService rolesService;
 	@Autowired
 	private HttpSession httpSession;
+	@Autowired
+	private LoggerService loggerService;
 
 	@RequestMapping(value = "/user/add")
 	public String getUser(Model model) {
@@ -57,15 +60,17 @@ public class UsersController {
 		}
 		user.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user);
+		loggerService.newUserSignUp(user.getEmail());
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model, String error) {
+	public String login(Model model, String error, Principal principal) {
 		if (error != null) {
 			model.addAttribute("error", error);
 		}
+		
 		httpSession.setAttribute("login", "/login");
 		return "login";
 	}
@@ -79,6 +84,7 @@ public class UsersController {
 		} else {
 			users = usersService.getUsers(pageable, principal.getName());
 		}
+		loggerService.seeUsers(principal.getName());
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
@@ -86,7 +92,8 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, Principal principal) {
+		loggerService.userLogged(principal.getName());
 		return "home";
 	}
 
@@ -107,6 +114,7 @@ public class UsersController {
 	/* PARA LOS AMIGOS */
 	@RequestMapping("/user/friends")
 	public String getFriends(Pageable pageable, Principal principal, Model model) {
+		loggerService.seeOwnFriends(principal.getName());
 		Page<User> users = usersService.getFriends(pageable, principal.getName());
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
@@ -115,8 +123,10 @@ public class UsersController {
 
 	@RequestMapping("/user/delete/{id}")
 	public String deleteUser(@PathVariable Long id, Principal principal) {
+		User userDelete = usersService.getUser(id);
+		loggerService.adminDeleteUser(principal.getName(), userDelete.getEmail());
 		usersService.deleteUser(id);
 		return "redirect:/user/list";
-	}
+	} 
 
 }
