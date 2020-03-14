@@ -16,9 +16,9 @@ public class PostsService {
 	@Autowired
 	private PostRepository postsRepository;
 	
-	public void addPost(Post post, User user) {
+	public Post addPost(Post post, User user) {
 		post.setUser(user);
-		postsRepository.save(post);
+		return postsRepository.save(post);
 	}
 	
 	public Page<Post> getPostOfUser(Pageable pageable, User user){

@@ -14,7 +14,6 @@ public class Post {
 	@GeneratedValue
 	private long id;
 
-	
 	private Date date;
 	
 	private String title;
@@ -22,6 +21,8 @@ public class Post {
 	@ManyToOne
 	@JoinColumn(name="id_user")
 	private User user;
+	
+	public boolean hasImage = false;
 	
 	public Post() {
 		this.date = new Date();
@@ -64,6 +65,22 @@ public class Post {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public boolean getHasImage() {
+		return hasImage;
+	}
+
+	public void setHasImage(boolean hasImage) {
+		this.hasImage = hasImage;
 	}
 }
 
