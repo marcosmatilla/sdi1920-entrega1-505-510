@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,13 +64,12 @@ public class UsersController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model, String error) {
-		if(error!=null) {
+		if (error != null) {
 			model.addAttribute("error", error);
 		}
 		httpSession.setAttribute("login", "/login");
 		return "login";
 	}
-	
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
@@ -94,10 +94,9 @@ public class UsersController {
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		Page<User> users = null;
-		if(!usersService.getUserByEmail(principal.getName()).getRole().equals("ROLE_ADMIN")) {
+		if (!usersService.getUserByEmail(principal.getName()).getRole().equals("ROLE_ADMIN")) {
 			users = usersService.getUsers(pageable, principal.getName());
-		}
-		else {
+		} else {
 			users = usersService.getAllUserForAdmin(pageable, principal.getName());
 		}
 		model.addAttribute("usersList", users.getContent());
@@ -120,4 +119,5 @@ public class UsersController {
 		usersService.deleteUser(id);
 		return "redirect:/user/list";
 	}
+
 }
