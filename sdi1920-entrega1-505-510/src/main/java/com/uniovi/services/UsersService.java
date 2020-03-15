@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.validation.ReportAsSingleViolation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,8 +35,8 @@ public class UsersService {
 		usersRepository.findAll().forEach(users::add);
 		return users;
 	}
-	
-	public Page<User> getAllUserForAdmin(Pageable pageable, String email){
+
+	public Page<User> getAllUserForAdmin(Pageable pageable, String email) {
 		Page<User> users = usersRepository.listUsersAdmin(pageable, email);
 		return users;
 	}

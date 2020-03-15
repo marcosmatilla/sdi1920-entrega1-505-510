@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
+import com.uniovi.services.LoggerService;
 import com.uniovi.services.PostsService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.AddPostValidator;
@@ -35,9 +37,13 @@ public class PostController {
 	@Autowired
 	private AddPostValidator addPostValidator;
 	
+	@Autowired
+	private LoggerService loggerService;
+	
 	@RequestMapping("/post/list")
 	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
+		loggerService.seeOwnPost(user.getEmail());
 		Page<Post> posts = postsService.getPostOfUser(pageable, user);
 		model.addAttribute("postList", posts.getContent());
 		model.addAttribute("page", posts);
@@ -45,8 +51,9 @@ public class PostController {
 	}
 
 	@RequestMapping("/post/list/{id}")
-	public String getListFriend(Model model, Pageable pageable, @PathVariable Long id) {
+	public String getListFriend(Model model, Pageable pageable, @PathVariable Long id, Principal principal) {
 		User user = usersService.getUser(id);
+		loggerService.seeUserPost(principal.getName(), user.getEmail());
 		Page<Post> posts = postsService.getPostOfUser(pageable, user);
 		model.addAttribute("postList", posts.getContent());
 		model.addAttribute("page", posts);
@@ -60,13 +67,14 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/add", method = RequestMethod.POST)
-	public String addPost(Post post, Model model, @RequestParam("image") MultipartFile image, BindingResult result) {
+	public String addPost(Post post, Model model, @RequestParam("image") MultipartFile image, BindingResult result, Principal principal) {
 		addPostValidator.validate(post, result);
 		if(result.hasErrors()) {
 			return "post/add";
 		}
 		post.setHasImage(!image.isEmpty());
 		Post saved = postsService.addPost(post, usersService.getCurrentUser());
+		loggerService.addPost(principal.getName());
 		if(!image.isEmpty()) {
 			saveImage(image,result,saved);
 			if(result.hasErrors()) {

@@ -18,6 +18,7 @@
 						<th class="col-md-1" th:text="#{post.list.date}">Fecha</th>
 						<th class="col-md-1" th:text="#{post.list.title}">Titulo</th>
 						<th class="col-md-1" th:text="#{post.list.content}">Contenido</th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -30,12 +31,14 @@
 							<div th:if="${post.hasImage}">
 								<img th:src="${'/fotos/' + post.id + '.jpg'}" th:height="50"
 									th:width="50" />
+
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<p th:text="#{post.list.reload.message}"></p>
 		<footer th:replace="fragments/pagination" />
 	</div>
 

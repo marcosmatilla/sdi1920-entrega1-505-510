@@ -6,25 +6,22 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container">
 		<h2 th:text="#{user.friends.tittle}"></h2>
-		<p th:text="#{user.friends.message}">Aquí tienes tu lista de
-			amigos</p>
+		<p th:text="#{user.friends.message}"></p>
 
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableUsers"
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th class="col-md-1" th:text="#{user.friends.email}">Email</th>
-						<th class="col-md-1" th:text="#{user.friends.name}">Nombre</th>
+						<th class="col-md-1" th:text="#{user.friends.email}"></th>
+						<th class="col-md-1" th:text="#{user.friends.name}"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td th:text="${user.email}">Email</td>
+						<td th:text="${user.email}"></td>
 						<td><a th:href="${'/post/list/' + user.id}"
-							th:text="${user.getFullName()}">Nombre</a></td>
-
-
+							th:text="${user.getFullName()}"></a></td>
 					</tr>
 				</tbody>
 			</table>
