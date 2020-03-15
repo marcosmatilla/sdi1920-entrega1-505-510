@@ -31,7 +31,7 @@ public class InvitationController {
 	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
 		loggerService.seeInvitations(user.getEmail());
-		Page<Invitation> invitation = invitationService.getFriendRequestsForUser(pageable, user);
+		Page<Invitation> invitation = invitationService.getInvitationForUser(pageable, user);
 		model.addAttribute("invitationList", invitation.getContent());
 		model.addAttribute("page", invitation);
 		return "invitation/list";
@@ -40,7 +40,7 @@ public class InvitationController {
 	@RequestMapping("/invitation/list/update")
 	public String updateList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
-		Page<Invitation> invitation = invitationService.getFriendRequestsForUser(pageable, user);
+		Page<Invitation> invitation = invitationService.getInvitationForUser(pageable, user);
 		model.addAttribute("tableUsers", invitation.getContent());
 		model.addAttribute("page", invitation);
 		return "user/friends::tableUsers";

@@ -14,7 +14,7 @@
 						<th class="col-md-1" th:text="#{invitation.list.name}">Nombre</th>
 						<th class="col-md-1" th:text="#{invitation.list.email}">Email</th>
 						<th class="col-md-1"></th>
-						
+
 					</tr>
 				</thead>
 				<tbody>
@@ -23,7 +23,8 @@
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
 						<td><a
-							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}" th:text="#{invitation.list.aceptar}">Aceptar</a></td>
+							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}"
+							th:text="#{invitation.list.aceptar}">Aceptar</a></td>
 					</tr>
 				</tbody>
 			</table>
