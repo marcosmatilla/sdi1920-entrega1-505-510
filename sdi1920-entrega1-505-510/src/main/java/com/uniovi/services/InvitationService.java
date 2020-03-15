@@ -36,7 +36,7 @@ public class InvitationService {
 
 	}
 
-	public Page<Invitation> getFriendRequestsForUser(Pageable pageable, User user) {
+	public Page<Invitation> getInvitationForUser(Pageable pageable, User user) {
 		Page<Invitation> invitation = invitationRepository.findAllByUser(pageable, user);
 		return invitation;
 	}

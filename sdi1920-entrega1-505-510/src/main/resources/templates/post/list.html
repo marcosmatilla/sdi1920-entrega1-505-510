@@ -8,7 +8,7 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2 th:text="#{post.list.principal.title}"></h2> 
+		<h2 th:text="#{post.list.principal.title}"></h2>
 		<p th:text="#{post.list.message}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -18,7 +18,7 @@
 						<th class="col-md-1" th:text="#{post.list.date}">Fecha</th>
 						<th class="col-md-1" th:text="#{post.list.title}">Titulo</th>
 						<th class="col-md-1" th:text="#{post.list.content}">Contenido</th>
-
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,10 +27,19 @@
 						<td th:text="${#dates.format(post.date, 'dd/MM/yyyy HH:mm')}"></td>
 						<td th:text="${post.title}"></td>
 						<td th:text="${post.content}"></td>
+						<td>
+							<div th:if="${post.hasImage}">
+								<img th:src="${'/fotos/' + post.id + '.jpg'}" th:height="50"
+									th:width="50" />
+
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<p th:text="#{post.list.reload.message}"></p>
+		<footer th:replace="fragments/pagination" />
 	</div>
 
 	<footer th:replace="fragments/footer" />

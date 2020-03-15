@@ -11,7 +11,7 @@
 					th:text="#{login.email}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="username"
-						th:placeholder="#{login.example.email}" required="true" />
+						th:placeholder="#{login.example.email}"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -19,7 +19,7 @@
 					th:text="#{login.pass}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="password"
-						th:placeholder="#{login.example.pass}" required="true" /> <span
+						th:placeholder="#{login.example.pass}"/> <span
 						class="text-danger" th:if="${error!=null}"
 						th:text="#{Error.login}" />
 				</div>
