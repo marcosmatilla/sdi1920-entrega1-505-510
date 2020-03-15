@@ -55,7 +55,7 @@
 								<p id="aceptada" th:case="'FRIENDS'" th:disabled="true" th:text="#{user.list.acept}">Aceptado</p>
 							</div>
 						</td>
-						<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						<td><a
 							th:href="${'/user/delete/' + user.id}"
 							th:text="#{user.list.admin.eliminar}">Eliminar</a></td>
 					</tr>

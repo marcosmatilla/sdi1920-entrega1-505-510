@@ -5,7 +5,7 @@
 --------- Las de logeo
 [X] PR05
 [X] PR06
-[ ] PR07 - Campo blanco
+[X] PR07 - Campo blanco
 [X] PR08
 ---------
 [X] PR09
@@ -22,4 +22,14 @@
 [X] PR20
 [X] PR21
 [X] PR22
-[ ] PR23
+[X] PR23
+
+-- Opcionales --
+[X] PR24
+[X] PR25
+[X] PR26
+[X] PR27
+[X] PR28
+[X] PR29
+[X] PR30
+[X] PR31

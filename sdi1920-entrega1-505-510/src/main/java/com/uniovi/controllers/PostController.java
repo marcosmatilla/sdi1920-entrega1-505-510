@@ -33,13 +33,13 @@ public class PostController {
 
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private AddPostValidator addPostValidator;
-	
+
 	@Autowired
 	private LoggerService loggerService;
-	
+
 	@RequestMapping("/post/list")
 	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
@@ -50,14 +50,21 @@ public class PostController {
 		return "post/list";
 	}
 
+	
 	@RequestMapping("/post/list/{id}")
 	public String getListFriend(Model model, Pageable pageable, @PathVariable Long id, Principal principal) {
 		User user = usersService.getUser(id);
-		loggerService.seeUserPost(principal.getName(), user.getEmail());
-		Page<Post> posts = postsService.getPostOfUser(pageable, user);
-		model.addAttribute("postList", posts.getContent());
-		model.addAttribute("page", posts);
-		return "post/list";
+		User usPrincipal = usersService.getCurrentUser();
+		if (user.checkFriendStatus(usPrincipal) != "FRIENDS") {
+			loggerService.errorFriendPost(usPrincipal.getEmail(), user.getEmail());
+			return "redirect:/error";
+		} else {
+			loggerService.seeUserPost(principal.getName(), user.getEmail());
+			Page<Post> posts = postsService.getPostOfUser(pageable, user);
+			model.addAttribute("postList", posts.getContent());
+			model.addAttribute("page", posts);
+			return "post/list";
+		}
 	}
 
 	@RequestMapping(value = "/post/add", method = RequestMethod.GET)
@@ -67,33 +74,32 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/add", method = RequestMethod.POST)
-	public String addPost(Post post, Model model, @RequestParam("image") MultipartFile image, BindingResult result, Principal principal) {
+	public String addPost(Post post, Model model, @RequestParam("image") MultipartFile image, BindingResult result,
+			Principal principal) {
 		addPostValidator.validate(post, result);
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "post/add";
 		}
 		post.setHasImage(!image.isEmpty());
 		Post saved = postsService.addPost(post, usersService.getCurrentUser());
 		loggerService.addPost(principal.getName());
-		if(!image.isEmpty()) {
-			saveImage(image,result,saved);
-			if(result.hasErrors()) {
-				return "post/add";				
+		if (!image.isEmpty()) {
+			saveImage(image, result, saved);
+			if (result.hasErrors()) {
+				return "post/add";
 			}
 		}
 		return "redirect:/post/list";
 	}
 
-	private void saveImage(MultipartFile image,BindingResult result,Post post) {
+	private void saveImage(MultipartFile image, BindingResult result, Post post) {
 		try {
 			InputStream is = image.getInputStream();
-			Files.copy(is, 
-					Paths.get("src/main/resources/static/fotos/" + post.getId() + ".jpg"),
+			Files.copy(is, Paths.get("src/main/resources/static/fotos/" + post.getId() + ".jpg"),
 					StandardCopyOption.REPLACE_EXISTING);
-		}catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 
 }

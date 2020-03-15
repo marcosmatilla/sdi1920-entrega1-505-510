@@ -51,6 +51,10 @@ public class LoggerService {
 	public void seeUsers(String name) {
 		log.info("El usuario {} listó todos los usuarios", name);
 	}
+	
+	public void errorFriendPost(String user1, String user2) {
+		log.info("El usuario {} intentó acceder a los post de {} sin ser amigos", user1, user2);
+	}
 }
 
 
