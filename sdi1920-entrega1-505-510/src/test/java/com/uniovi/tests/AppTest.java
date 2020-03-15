@@ -18,11 +18,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
+import com.uniovi.tests.pageobjects.PO_NavView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
+
+import junit.framework.Assert;
 
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -136,13 +139,7 @@ public class AppTest {
 
 	}
 
-	/**
-	 * [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email
-	 * y contraseña vacíos). [Prueba8] Inicio de sesión con datos válidos (usuario
-	 * estándar, email existente, pero contraseña incorrecta).
-	 */
-
-	// Usuario registrado: inicio de sesión
+	// Usuario registrado: inicio de sesión (revisar estas)
 
 	// [Prueba5] Inicio de sesión con datos válidos (administrador).
 	@Test
@@ -184,18 +181,20 @@ public class AppTest {
 		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
 	}
 
-	// PR08. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
+	// [Prueba8] Inicio de sesión con datos válidos (usuario estándar, email
+	// existente, pero contraseña incorrecta).
 	@Test
 	public void PR08() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "99999993D", "123456");
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "0");
 		// COmprobamos que entramos en la pagina privada de Alumno
-		PO_View.checkElement(driver, "text", "Notas del usuario");
+		PO_RegisterView.checkKey(driver, "Error.login", PO_Properties.getSPANISH());
 	}
 
 	// Usuario Registrado: Fin de sesión
+
 	// [Prueba9] Hacer click en la opción de salir de sesión y comprobar que se
 	// redirige a la página de inicio de sesión (Login)
 
@@ -210,7 +209,7 @@ public class AppTest {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 
-		PO_View.checkElement(driver, "text", "Identifícate");
+		PO_View.checkElement(driver, "text", "Identificate");
 
 	}
 
@@ -231,111 +230,374 @@ public class AppTest {
 		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
 	}
 
-	
-	// [Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el
+	/////////////////////////////////////////////////////////////////////////////////
+
+	// Listado de usuarios
+
+	// [Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos
+	// los que existen en el
 	// sistema.
 	@Test
 	public void PR11() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "99999990A", "123456");
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
 		// COmprobamos que entramos en la pagina privada de Alumno
-		PO_View.checkElement(driver, "text", "Notas del usuario");
-		// Desconexión
-		PO_HomeView.clickOption(driver, "logout", "text", "Identifícate");
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
+
+		driver.get("http://localhost:8090/user/list");
+
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 5);
+
+		driver.get("http://localhost:8090/user/list?page=1");
+
+		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 5);
+
+		driver.get("http://localhost:8090/user/list?page=2");
+
+		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 3);
+
 	}
 
-	// PR12. Loguearse, comprobar que se visualizan 4 filas de notas y desconectarse
-	// usando el rol de estudiante.
+	// Buscar Usuarios
+
+	// [Prueba12] Hacer una búsqueda con el campo vacío y comprobar que se muestra
+	// la página que corresponde con el listado usuarios existentes en el sistema.
+
 	@Test
 	public void PR12() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
 
-		PO_PrivateView.refactorizacion(driver, "99999990A", "Notas del usuario");
+		driver.get("http://localhost:8090/user/list");
 
-		// Contamos el número de filas de notas
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		assertTrue(elementos.size() == 4);
-		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		WebElement boton = driver.findElement(By.id("botonBusqueda"));
+		boton.click();
+
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 5);
+
+		driver.get("http://localhost:8090/user/list?page=1");
+
+		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 5);
+
+		driver.get("http://localhost:8090/user/list?page=2");
+
+		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 3);
+
 	}
 
-	// PR13. Loguearse como estudiante y ver los detalles de la nota con Descripcion
-	// = Nota A2. //P13. Ver la lista de Notas.
+	// [Prueba13] Hacer una búsqueda escribiendo en el campo un texto que no exista
+	// y comprobar que se muestra la página que corresponde, con la lista de
+	// usuarios vacía.
+
 	@Test
 	public void PR13() {
-		PO_PrivateView.refactorizacion(driver, "99999990A", "Notas del usuario");
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Contamos las notas
-		By enlace = By.xpath("//td[contains(text(), 'Nota A2')]/following-sibling::*[2]");
-		driver.findElement(enlace).click();
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Esperamos por la ventana de detalle
-		PO_View.checkElement(driver, "text", "Detalles de la nota");
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
+
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement campo = driver.findElement(By.name("searchText"));
+		WebElement boton = driver.findElement(By.id("botonBusqueda"));
+
+		campo.sendKeys("Mariano Rajoy");
+		boton.click();
+
+		assertTrue(PO_View.checkElementNotExist(driver, "//tbody/tr"));
+
 	}
 
-	// P14. Loguearse como profesor y Agregar Nota A2.
-	// P14. Esta prueba podría encapsularse mejor ...
+	// [Prueba14] Hacer una búsqueda con un texto específico y comprobar que se
+	// muestra la página que
+	// corresponde, con la lista de usuarios en los que el texto especificados sea
+	// parte de su nombre, apellidos o
+	// de su email.
+
 	@Test
 	public void PR14() {
-		PO_PrivateView.refactorizacion(driver, "99999993D", "99999993D");
 
-		// Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-menu')]/a
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
 
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'marks-menu')]/a");
-		elementos.get(0).click();
-		// Esperamos a aparezca la opción de añadir nota: //a[contains(@href,
-		// 'mark/add')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/add')]");
-		// Pinchamos en agregar Nota.
-		elementos.get(0).click();
-		// Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
-		PO_PrivateView.fillFormAddMark(driver, 3, "Nota Nueva 1", "8");
-		// Esperamos a que se muestren los enlaces de paginación la lista de notas
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-		// Nos vamos a la última página
-		elementos.get(3).click();
-		// Comprobamos que aparece la nota en la pagina
-		elementos = PO_View.checkElement(driver, "text", "Nota Nueva 1");
-		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement campo = driver.findElement(By.name("searchText"));
+		WebElement boton = driver.findElement(By.id("botonBusqueda"));
+
+		campo.sendKeys("Pedro");
+		boton.click();
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
+		PO_View.checkElement(driver, "text", "Pedro");
+		PO_View.checkElement(driver, "text", "Díaz");
+
 	}
 
-	// PRN. Loguearse como profesor, vamos a la ultima página y Eliminamos la Nota
-	// Nueva 1. //PRN. Ver la lista de Notas.
+	// Enviar invitación de amistad
+
+	// [Prueba15] Desde el listado de usuarios de la aplicación, enviar una
+	// invitación de amistad a un usuario.
+	// Comprobar que la solicitud de amistad aparece en el listado de invitaciones
+	// (punto siguiente).
+
 	@Test
 	public void PR15() {
-		PO_PrivateView.refactorizacion(driver, "99999993D", "99999993D");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
 
-		// Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'marks-menu')]/a");
-		elementos.get(0).click();
-		// Pinchamos en la opción de lista de notas.
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/list')]");
-		elementos.get(0).click();
-		// Esperamos a que se muestren los enlaces de paginacion la lista de notas
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-		// Nos vamos a la última página
-		elementos.get(3).click();
-		// Esperamos a que aparezca la Nueva nota en la ultima pagina
-		// Y Pinchamos en el enlace de borrado de la Nota "Nota Nueva 1"
-		// //td[contains(text(), 'Nota Nueva
-		// 1')]/following-sibling::*/a[contains(text(), 'mark/delete')]"
-		elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), 'Nota Nueva 1')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
-		elementos.get(0).click();
-		// Volvemos a la última pagina
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-		elementos.get(3).click();
-		// Y esperamos a que NO aparezca la ultima "Nueva Nota 1"
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva 1", PO_View.getTimeout());
-		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement campo = driver.findElement(By.name("searchText"));
+		WebElement boton = driver.findElement(By.id("botonBusqueda"));
+
+		campo.sendKeys("Pepe");
+		boton.click();
+
+		WebElement botonEnviar = driver.findElement(By.id("enviar"));
+		botonEnviar.click();
+
+	}
+
+	// [Prueba16] Desde el listado de usuarios de la aplicación, enviar una
+	// invitación de amistad a un usuario al
+	// que ya le habíamos enviado la invitación previamente. No debería dejarnos
+	// enviar la invitación, se podría
+	// ocultar el botón de enviar invitación o notificar que ya había sido enviada
+	// previamente.
+
+	@Test
+	public void PR16() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement campo = driver.findElement(By.name("searchText"));
+		WebElement boton = driver.findElement(By.id("botonBusqueda"));
+
+		campo.sendKeys("Pepe");
+		boton.click();
+
+		SeleniumUtils.esperarSegundos(driver, 5);
+
+		PO_View.checkElement(driver, "text", "Enviada");
+
+	}
+
+	// Listar las invitaciones de amistad recibidas
+
+	// [Prueba17] Mostrar el listado de invitaciones de amistad recibidas. Comprobar
+	// con un listado que contenga varias invitaciones recibidas.
+
+	@Test
+	public void PR17() {
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+
+		driver.get("http://localhost:8090/invitation/list");
+
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 4);
+
+	}
+
+	// Aceptar invitación
+
+	// [Prueba18] Sobre el listado de invitaciones recibidas. Hacer click en el
+	// botón/enlace de una de ellas y comprobar que dicha solicitud desaparece del
+	// listado de invitaciones.
+
+	@Test
+	public void PR18() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pepe@gmail.com", "123456");
+
+		driver.get("http://localhost:8090/invitation/list");
+
+		WebElement botonEnviar = driver.findElement(By.id("aceptar"));
+		botonEnviar.click();
+
+		driver.get("http://localhost:8090/invitation/list");
+
+		assertTrue(PO_View.checkElementNotExist(driver, "//tbody/tr"));
+
+	}
+
+	// Listado de amigos
+	// [Prueba19] Mostrar el listado de amigos de un usuario. Comprobar que el
+	// listado contiene los amigos que deben ser.
+
+	@Test
+	public void PR19() {
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+
+		driver.get("http://localhost:8090/invitation/list");
+
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		for (int i = 0; i < elementos.size(); i++) {
+			WebElement boton = driver.findElement(By.id("aceptar"));
+			if (boton != null) {
+				boton.click();
+				driver.get("http://localhost:8090/invitation/list");
+			}
+		}
+
+		driver.get("http://localhost:8090/user/friends");
+
+		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		assertTrue(elementos.size() == 4);
+
+	}
+
+	// Internacionalización de todas las vistas
+
+	// [Prueba20] Visualizar al menos cuatro páginas en Español/Inglés/Español
+	// (comprobando que algunas de las etiquetas cambian al idioma correspondiente).
+	// Ejemplo, Página principal/Opciones Principales de Usuario/Listado de
+	// Usuarios.
+
+	@Test
+	public void PR20() {
+		// index página 1
+
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "language.change", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "language.change", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getENGLISH());
+
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "language.change", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+
+		// login página 2
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.email", PO_Properties.getSPANISH());
+
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+
+		PO_View.checkKey(driver, "login.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "login.email", PO_Properties.getENGLISH());
+
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.email", PO_Properties.getSPANISH());
+
+		// registro página 3
+
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+
+		PO_View.checkKey(driver, "signup.welcome", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.email", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.name", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.lastName", PO_Properties.getSPANISH());
+
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+
+		PO_View.checkKey(driver, "signup.welcome", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.email", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.name", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.lastName", PO_Properties.getENGLISH());
+
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+
+		PO_View.checkKey(driver, "signup.welcome", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.email", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.name", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.lastName", PO_Properties.getSPANISH());
+
+		// lista de usuario página 4
+	}
+
+	// Seguridad
+
+	// [Prueba21] Intentar acceder sin estar autenticado a la opción de listado de
+	// usuarios. Se deberá volver al formulario de login.
+
+	@Test
+	public void PR21() {
+		// http://localhost:8090/user/list
+		try {
+			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]");
+			elementos.get(0).click();
+		} catch (Exception e) {
+			driver.get("http://localhost:8090/user/list");
+			PO_View.checkElement(driver, "text", "Identificate");
+		}
+	}
+
+	// [Prueba22] Intentar acceder sin estar autenticado a la opción de listado de
+	// publicaciones de un usuario estándar. Se deberá volver al formulario de
+	// login.
+
+	@Test
+	public void PR22() {
+		// http://localhost:8090/user/list
+		try {
+			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]");
+			elementos.get(0).click();
+		} catch (Exception e) {
+			driver.get("http://localhost:8090/post/list");
+			PO_View.checkElement(driver, "text", "Identificate");
+		}
+
+	}
+
+	// [Prueba23] Estando autenticado como usuario estándar intentar acceder a una
+	// opción disponible solo para usuarios administradores (Se puede añadir una
+	// opción cualquiera en el menú). Se deberá indicar un mensaje de acción
+	// prohibida
+
+	@Test
+	public void PR23() {
+		// Logeo
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "pediaz@gmail.com");
+
+		// FALTA añadir una opcion que el admin pueda ver y el resto no.
 	}
 
 }

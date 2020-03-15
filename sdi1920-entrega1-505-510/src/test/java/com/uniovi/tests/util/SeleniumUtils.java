@@ -49,6 +49,22 @@ public class SeleniumUtils {
 
 		assertTrue(resultado);	
 	}
+	
+	
+	/**
+	 * Aborta si el elemento está presente en la página actual tras timeout segundos.
+	 * @param driver: apuntando al navegador abierto actualmente.
+	 * @param elemento: elemento a buscar
+	 * @param timeout: el tiempo máximo que se esperará por la aparición del texto a buscar
+	 */
+	static public boolean EsperaCargaPaginaNoElemento(WebDriver driver, String elemento, int timeout)
+	{
+		return	(new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(elemento)));
+
+		
+	}
+	
+	
 
 
 	/**

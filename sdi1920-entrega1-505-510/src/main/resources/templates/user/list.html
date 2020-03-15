@@ -11,9 +11,8 @@
 				<input name="searchText" type="text" class="form-control" size="50"
 					th:placeholder="#{user.list.placeholder}">
 			</div>
-			<button type="submit" class="btn btn-default">
-				<span th:text="#{btn.search}"></span>
-			</button>
+			<button id="botonBusqueda" type="submit" class="btn btn-default"><span
+								th:text="#{btn.search}"></span></button>
 		</form>
 		<p th:text="#{user.list.long.message}">Los usuarios que
 			actualmente figuran en el sistema son los siguientes:</p>
@@ -51,12 +50,9 @@
 						<td>
 							<!-- sec:authorize="hasRole('ROLE_PUBLIC')" -->
 							<div th:switch="${activeUser.checkFriendStatus(user)}">
-								<a th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }"
-									th:text="#{user.list.enviar}">Enviar</a>
-								<p th:case="'REQUEST_SENT'" th:disabled="true"
-									th:text="#{user.list.enviada}">Enviada</p>
-								<p th:case="'FRIENDS'" th:disabled="true"
-									th:text="#{user.list.acept}">Aceptado</p>
+								<a id="enviar" th:case="'NOT_FRIENDS'" th:href="${'/user/send/' + user.id }" th:text="#{user.list.enviar}">Enviar</a>
+								<p id="enviada" th:case="'REQUEST_SENT'" th:disabled="true" th:text="#{user.list.enviada}">Enviada</p>
+								<p id="aceptada" th:case="'FRIENDS'" th:disabled="true" th:text="#{user.list.acept}">Aceptado</p>
 							</div>
 						</td>
 						<td sec:authorize="hasRole('ROLE_ADMIN')"><a
