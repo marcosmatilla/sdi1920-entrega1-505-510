@@ -586,21 +586,21 @@ public class AppTest {
 		PO_LoginView.fillForm(driver, "pediaz@gmail.com", "123456");
 
 		driver.get("http://localhost:8090/user/list");
-		//user.list.tittle, user.list.long.message, user.list.email, user.list.name
+		// user.list.tittle, user.list.long.message, user.list.email, user.list.name
 		PO_View.checkKey(driver, "user.list.tittle", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "user.list.long.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "user.list.email", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "user.list.name", PO_Properties.getSPANISH());
-		
+
 		PO_NavView.changeIdiom(driver, "btnEnglish");
-		
+
 		PO_View.checkKey(driver, "user.list.tittle", PO_Properties.getENGLISH());
 		PO_View.checkKey(driver, "user.list.long.message", PO_Properties.getENGLISH());
 		PO_View.checkKey(driver, "user.list.email", PO_Properties.getENGLISH());
 		PO_View.checkKey(driver, "user.list.name", PO_Properties.getENGLISH());
-		
+
 		PO_NavView.changeIdiom(driver, "btnSpanish");
-		
+
 		PO_View.checkKey(driver, "user.list.tittle", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "user.list.long.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "user.list.email", PO_Properties.getSPANISH());
@@ -619,10 +619,9 @@ public class AppTest {
 	public void PR21() {
 		// http://localhost:8090/user/list
 		try {
-			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]");
-			elementos.get(0).click();
-		} catch (Exception e) {
 			driver.get("http://localhost:8090/user/list");
+		} catch (Exception e) {
+
 			PO_View.checkElement(driver, "text", "Identificate");
 		}
 	}
@@ -635,10 +634,9 @@ public class AppTest {
 	public void PR22() {
 		// http://localhost:8090/user/list
 		try {
-			List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'users-menu')]");
-			elementos.get(0).click();
-		} catch (Exception e) {
 			driver.get("http://localhost:8090/post/list");
+		} catch (Exception e) {
+
 			PO_View.checkElement(driver, "text", "Identificate");
 		}
 
@@ -769,14 +767,14 @@ public class AppTest {
 		WebElement campo = driver.findElement(By.name("searchText"));
 		WebElement boton = driver.findElement(By.id("botonBusqueda"));
 
-		campo.sendKeys("Pepe");
+		campo.sendKeys("Miguel");
 		boton.click();
 
 		WebElement botonEnviar = driver.findElement(By.id("enviar"));
 		botonEnviar.click();
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 
-		PO_LoginView.fillForm(driver, "pepe@gmail.com", "123456");
+		PO_LoginView.fillForm(driver, "mati@hotmail.com", "123456");
 
 		driver.get("http://localhost:8090/invitation/list");
 
@@ -906,7 +904,7 @@ public class AppTest {
 		driver.get("http://localhost:8090/user/list?page=2");
 
 		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
-		assertTrue(elementos.size() == 3);
+		assertTrue(elementos.size() == 4);
 
 	}
 }
