@@ -22,9 +22,8 @@
 						<!-- Lista de usuarios InvitationController mirar error -->
 						<td th:text="${invitation.sender.getName()}"></td>
 						<td th:text="${invitation.sender.getEmail()}"></td>
-						<td><a
-							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}"
-							th:text="#{invitation.list.aceptar}">Aceptar</a></td>
+						<td><a id="aceptar"
+							th:href="${'/user/accept/' + invitation.id +'/'+ invitation.sender.getId()}" th:text="#{invitation.list.aceptar}">Aceptar</a></td>
 					</tr>
 				</tbody>
 			</table>

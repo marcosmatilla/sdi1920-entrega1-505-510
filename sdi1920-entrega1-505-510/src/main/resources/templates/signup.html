@@ -13,7 +13,7 @@
 					th:text="#{signup.email}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="email"
-						th:placeholder="#{signup.example.email}" required="true" /> <span
+						th:placeholder="#{signup.example.email}"/> <span
 						class="text-danger" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}">
 				</div>
@@ -23,7 +23,7 @@
 					th:text="#{signup.name}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="name"
-						th:placeholder="#{signup.example.name}" required="true" /> <span
+						th:placeholder="#{signup.example.name}"/> <span
 						class="text-danger" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}" />
 				</div>
@@ -33,7 +33,7 @@
 					th:text="#{signup.lastName}"></span>:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="lastName"
-						th:placeholder="#{signup.example.lastname}" required="true" /> <span
+						th:placeholder="#{signup.example.lastname}"/> <span
 						class="text-danger" th:if="${#fields.hasErrors('lastName')}"
 						th:errors="*{lastName}" />
 				</div>
