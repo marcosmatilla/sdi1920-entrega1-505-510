@@ -34,7 +34,7 @@ public class AppTest {
 //	static String Geckdriver024 = "D:\\One Drive\\OneDrive - Universidad de Oviedo\\SDI\\Lab\\PL-SDI-Sesion5-material\\"
 //			+ "geckodriver024win64.exe";
 	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "C:\\Users\\Marcos\\Desktop\\INFORMATICA\\TERCERO\\2\\SDI\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+	static String Geckdriver024 = "C:\\Users\\luisc\\Desktop\\SDI\\geckodriver024win64.exe";
 
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
@@ -842,7 +842,8 @@ public class AppTest {
 		PO_View.checkElement(driver, "text", "Titulo de prueba");
 		PO_View.checkElement(driver, "text", "Texto de prueba");
 
-		PO_View.checkElement(driver, "free", "//img");
+		
+		PO_View.checkElement(driver, "free", "//td/div/img");
 	}
 
 	/**
