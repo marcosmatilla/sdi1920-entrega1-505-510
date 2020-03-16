@@ -3,8 +3,6 @@ package com.uniovi.controllers;
 import java.security.Principal;
 import java.util.LinkedList;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,8 +33,6 @@ public class UsersController {
 	private SignUpFormValidator signUpFormValidator;
 	@Autowired
 	private RolesService rolesService;
-	@Autowired
-	private HttpSession httpSession;
 	@Autowired
 	private LoggerService loggerService;
 
@@ -71,7 +67,6 @@ public class UsersController {
 			model.addAttribute("error", error);
 		}
 		
-		httpSession.setAttribute("login", "/login");
 		return "login";
 	}
 

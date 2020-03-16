@@ -30,9 +30,11 @@ import com.uniovi.tests.util.SeleniumUtils;
 public class AppTest {
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las actualizacioens
 	// automáticas)):
+//	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//	static String Geckdriver024 = "D:\\One Drive\\OneDrive - Universidad de Oviedo\\SDI\\Lab\\PL-SDI-Sesion5-material\\"
+//			+ "geckodriver024win64.exe";
 	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "D:\\One Drive\\OneDrive - Universidad de Oviedo\\SDI\\Lab\\PL-SDI-Sesion5-material\\"
-			+ "geckodriver024win64.exe";
+	static String Geckdriver024 = "C:\\Users\\Marcos\\Desktop\\INFORMATICA\\TERCERO\\2\\SDI\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
