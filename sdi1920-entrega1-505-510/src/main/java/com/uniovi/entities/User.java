@@ -224,4 +224,16 @@ public class User {
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
+	
+	
+	/**
+	 * Borra una amistad.
+	 * 
+	 * @param sender
+	 * @param receiver
+	 */
+	public void removeFriendship(User sender, User receiver) {
+		sender.getFriends().remove(receiver);
+		receiver.getFriends().remove(sender);
+	}
 }

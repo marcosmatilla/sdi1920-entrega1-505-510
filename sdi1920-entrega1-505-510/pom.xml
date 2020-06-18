@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.uniovi</groupId>
-	<artifactId>Notaneitor</artifactId>
+	<artifactId>sdi1920-entrega1-505-510</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Notaneitor</name>
+	<name>sdi1920-entrega1-505-510</name>
 	<description>Aplicacion para gestion de notas</description>
 
 	<properties>

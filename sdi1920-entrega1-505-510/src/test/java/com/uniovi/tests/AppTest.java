@@ -34,7 +34,7 @@ public class AppTest {
 //	static String Geckdriver024 = "D:\\One Drive\\OneDrive - Universidad de Oviedo\\SDI\\Lab\\PL-SDI-Sesion5-material\\"
 //			+ "geckodriver024win64.exe";
 	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "C:\\Users\\luisc\\Desktop\\SDI\\geckodriver024win64.exe";
+	static String Geckdriver024 = "C:\\Users\\luisc\\Desktop\\sdi1920-entrega1-505-510\\geckodriver024win64.exe";
 
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
@@ -842,7 +842,6 @@ public class AppTest {
 		PO_View.checkElement(driver, "text", "Titulo de prueba");
 		PO_View.checkElement(driver, "text", "Texto de prueba");
 
-		
 		PO_View.checkElement(driver, "free", "//td/div/img");
 	}
 
@@ -887,7 +886,6 @@ public class AppTest {
 
 	@Test
 	public void PR31() {
-
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -908,6 +906,94 @@ public class AppTest {
 
 		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
 		assertTrue(elementos.size() == 4);
+
+	}
+
+	/**
+	 * [Prueba32]Ir a la lista de usuarios,borrar el primer usuario de la
+	 * lista,comprobar que la lista seactualiza y dicho usuario desaparece.
+	 */
+
+	@Test
+	public void PR32() {
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		// COmprobamos que entramos en la pagina privada de Alumno
+
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement pediaz = driver.findElement(By.id("1"));
+		pediaz.click();
+
+		WebElement eliminado = driver.findElement(By.id("btnMultiple"));
+		eliminado.click();
+
+		assertTrue(PO_View.checkElementNotExist(driver, "pediaz@gmail.com"));
+
+	}
+
+	/**
+	 * [Prueba33]Ir a la lista de usuarios,borrar el último usuario de la
+	 * lista,comprobar que la lista seactualiza y dicho usuariodesaparece
+	 */
+
+	@Test
+	public void PR33() {
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		// COmprobamos que entramos en la pagina privada de Alumno
+
+		driver.get("http://localhost:8090/user/list?page=2");
+
+		WebElement mati = driver.findElement(By.id("13"));
+		mati.click();
+
+		WebElement eliminado = driver.findElement(By.id("btnMultiple"));
+		eliminado.click();
+
+		driver.get("http://localhost:8090/user/list?page=2");
+
+		assertTrue(PO_View.checkElementNotExist(driver, "mati@hotmail.com"));
+
+	}
+
+	/**
+	 * [Prueba34]Ir a la lista de usuarios,borrar 3 usuarios,comprobar que la lista
+	 * se actualiza y dichos usuarios desaparecen.
+	 */
+
+	@Test
+	public void PR34() {
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		// COmprobamos que entramos en la pagina privada de Alumno
+
+		driver.get("http://localhost:8090/user/list");
+
+		WebElement lu = driver.findElement(By.id("2"));
+		lu.click();
+		
+		WebElement marod = driver.findElement(By.id("3"));
+		marod.click();
+		
+		WebElement martita = driver.findElement(By.id("4"));
+		martita.click();
+
+		WebElement eliminado = driver.findElement(By.id("btnMultiple"));
+		eliminado.click();
+
+		assertTrue(PO_View.checkElementNotExist(driver, "lu@gmail.com"));
+		assertTrue(PO_View.checkElementNotExist(driver, "marod@yahoo.es"));
+		assertTrue(PO_View.checkElementNotExist(driver, "martitaalmonteperdido@hotmail.com"));
 
 	}
 }

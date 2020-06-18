@@ -2,6 +2,8 @@ package com.uniovi.controllers;
 
 import java.security.Principal;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.LoggerService;
+import com.uniovi.services.PostsService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -27,6 +30,8 @@ import com.uniovi.validators.SignUpFormValidator;
 public class UsersController {
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private PostsService postsService;
 	@Autowired
 	private SecurityService securityService;
 	@Autowired
@@ -66,7 +71,7 @@ public class UsersController {
 		if (error != null) {
 			model.addAttribute("error", error);
 		}
-		
+
 		return "login";
 	}
 
@@ -120,8 +125,28 @@ public class UsersController {
 	public String deleteUser(@PathVariable Long id, Principal principal) {
 		User userDelete = usersService.getUser(id);
 		loggerService.adminDeleteUser(principal.getName(), userDelete.getEmail());
+		Set<User> amigos = userDelete.getFriends();
+		amigos.forEach((e) -> {
+			e.removeFriendship(e, userDelete);
+		});
 		usersService.deleteUser(id);
 		return "redirect:/user/list";
-	} 
+	}
+
+	@RequestMapping(value = { "/user/deleteAll" }, method = RequestMethod.POST)
+	public String deleteUsers(@RequestParam Map<String, String> requestParams) {
+		for (String s : requestParams.keySet()) {
+			Long id = Long.decode(s);
+			postsService.getPostByUserId(id).forEach(p -> postsService.getPostById(p.getId()));
+			User send = usersService.getUser(id);
+			Set<User> amigos = send.getFriends();
+			amigos.forEach((e) -> {
+				e.removeFriendship(e, send);
+			});
+			usersService.deleteUser(send.getId());
+		}
+
+		return "redirect:/user/list";
+	}
 
 }

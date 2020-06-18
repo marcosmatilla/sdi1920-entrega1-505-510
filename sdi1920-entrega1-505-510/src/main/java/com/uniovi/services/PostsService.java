@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +20,18 @@ public class PostsService {
 		return postsRepository.save(post);
 	}
 	
+	public Post getPostById(Long id) {
+		return postsRepository.findPostById(id);
+	}
+	
+	public ArrayList<Post> getPostByUserId(Long id){
+		return postsRepository.findAllByUserId(id);
+	}
+	
 	public Page<Post> getPostOfUser(Pageable pageable, User user){
 		return postsRepository.findAllByUser(pageable, user);
 	}
+	
+	
 	
 }
