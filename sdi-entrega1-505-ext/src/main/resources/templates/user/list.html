@@ -37,18 +37,17 @@
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th class="col-md-1" th:text="#{user.list.email}">Email</th>
-						<th class="col-md-1" th:text="#{user.list.name}">Nombre</th>
-						<th class="col-md-1" th:text="#{user.list.lastName}">Apellidos</th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<form action="/user/deleteAll" method="post">
 					<tr th:each="user : ${usersList}">
+					<th class="col-md-1" th:text="${user.comunidad}"></th>
 						<td th:text="${user.email}">Email</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td th:text="${user.lastName}">Apellido</td>
+						<td th:text="${user.direccion}">Direccion</td>
 						<td>
 							<!-- sec:authorize="hasRole('ROLE_PUBLIC')" -->
 							<div th:switch="${activeUser.checkFriendStatus(user)}">

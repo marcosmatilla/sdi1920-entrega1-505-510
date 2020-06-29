@@ -27,6 +27,7 @@ public class SignUpFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Error.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "direccion", "Error.empty");
 		
 		if (usersService.getUserByEmail(user.getEmail()) != null) {
 			errors.rejectValue("email", "Error.signup.mail.duplicate");
@@ -44,5 +45,11 @@ public class SignUpFormValidator implements Validator {
 		if (!user.getPasswordConfirm().equals(user.getPassword())) {
 			errors.rejectValue("passwordConfirm", "Error.signup.passwordConfirm.coincidence");
 		}
+		
+		if (user.getDireccion().length() <= 5 ) {
+			errors.rejectValue("direccion", "Error.signup.password.length");
+		}
+		
+		
 	}
 }

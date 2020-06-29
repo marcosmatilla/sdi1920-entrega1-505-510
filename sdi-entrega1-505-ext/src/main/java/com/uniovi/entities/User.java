@@ -31,6 +31,11 @@ public class User {
 	private String password;
 	@Transient
 	private String passwordConfirm;
+	
+	private String direccion;
+	
+	private String comunidad;
+
 
 	@Transient
 	private boolean send;
@@ -48,11 +53,12 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts = new HashSet<Post>();
 
-	public User(String email, String name, String lastName) {
+	public User(String email, String name, String lastName, String com) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
+		this.comunidad = com;
 	}
 
 	public User() {
@@ -142,6 +148,23 @@ public class User {
 	public void setSendedInvitations(Set<Invitation> sendedInvitations) {
 		this.sendedInvitations = sendedInvitations;
 	}
+	
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	
+	public String getComunidad() {
+		return comunidad;
+	}
+
+	public void setComunidad(String comunidad) {
+		this.comunidad = comunidad;
+	}
+
 
 	/**
 	 * Añade petición de amistad a la lista de peticiones enviadas del usuario que

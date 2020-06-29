@@ -30,47 +30,47 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		User user1 = new User("pediaz@gmail.com", "Pedro", "Díaz");
+		User user1 = new User("pediaz@gmail.com", "Pedro", "Díaz", "Asturias");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("lu@gmail.com", "Lucia", "Llera");
+		User user2 = new User("lu@gmail.com", "Lucia", "Llera", "Asturias");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
-		User user3 = new User("marod@yahoo.es", "María", "Rodríguez");
+		User user3 = new User("marod@yahoo.es", "María", "Rodríguez", "Asturias");
 		user3.setPassword("123456");
 		user3.setRole(rolesService.getRoles()[0]);
-		User user4 = new User("martitaalmonteperdido@hotmail.com", "Marta", "Almonte");
+		User user4 = new User("martitaalmonteperdido@hotmail.com", "Marta", "Almonte", "Asturias");
 		user4.setPassword("123456");
 		user4.setRole(rolesService.getRoles()[0]);
-		User user5 = new User("pescadofrito@gmail.com", "Pelayo", "Valdes");
+		User user5 = new User("pescadofrito@gmail.com", "Pelayo", "Valdes", "Asturias");
 		user5.setPassword("123456");
 		user5.setRole(rolesService.getRoles()[0]);
-		User user6 = new User("diezne@yahoo.es", "Diego", "Núñez");
+		User user6 = new User("diezne@yahoo.es", "Diego", "Núñez", "Asturias");
 		user6.setPassword("123456");
 		user6.setRole(rolesService.getRoles()[0]);
-		User user7 = new User("tutuya@hotmail.com", "Andrea", "Casillas");
+		User user7 = new User("tutuya@hotmail.com", "Andrea", "Casillas", "Asturias");
 		user7.setPassword("123456");
 		user7.setRole(rolesService.getRoles()[0]);
-		User user8 = new User("juanito11@yahoo.es", "Juan", "Díaz");
+		User user8 = new User("juanito11@yahoo.es", "Juan", "Díaz", "Asturias");
 		user8.setPassword("123456");
 		user8.setRole(rolesService.getRoles()[0]);
-		User user9 = new User("pepe@gmail.com", "Pepe", "Gonzalez");
+		User user9 = new User("pepe@gmail.com", "Pepe", "Gonzalez", "Asturias");
 		user9.setPassword("123456");
 		user9.setRole(rolesService.getRoles()[0]);
-		User user10 = new User("mariadelao@gmail.com", "María", "Hurlé");
+		User user10 = new User("mariadelao@gmail.com", "María", "Hurlé", "Asturias");
 		user10.setPassword("123456");
 		user10.setRole(rolesService.getRoles()[0]);
-		User user11 = new User("martita2201@hotmail.com", "Marta", "Almonte");
+		User user11 = new User("martita2201@hotmail.com", "Marta", "Almonte", "Asturias");
 		user11.setPassword("123456");
 		user11.setRole(rolesService.getRoles()[0]);
-		User user12 = new User("peval@gmail.com", "Juca", "Valdes");
+		User user12 = new User("peval@gmail.com", "Juca", "Valdes", "Baleares");
 		user12.setPassword("123456");
 		user12.setRole(rolesService.getRoles()[0]);
-		User user13 = new User("mati@hotmail.com", "Miguel", "Matilla");
+		User user13 = new User("mati@hotmail.com", "Miguel", "Matilla", "Canarias");
 		user13.setPassword("123456");
 		user13.setRole(rolesService.getRoles()[0]);
 
-		User user14 = new User("admin@email.com", "Admin", "Admin");
+		User user14 = new User("admin@email.com", "Admin", "Admin", "Asturias");
 		user14.setPassword("admin");
 		user14.setRole(rolesService.getRoles()[1]);
 

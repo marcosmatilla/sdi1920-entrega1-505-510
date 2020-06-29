@@ -1,0 +1,1293 @@
+/*C102*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$JBWHOvkCV7zLTru1bdLeOOo8fodIbNfxUU2KOM8sfjGs.0C3NtfMC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'lu@gmail.com','Llera','Lucia','$2a$10$qqurLOqNgrQwMM43DTfyI.fvzWTOROkyfDy9NIjlBLHU6HzyAnC.q','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$aF5g0uxOM7CTb7igwRmxWOkJ81tbGvUsLj301wDwPI3o9rlNjKANm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$brQ/idkM7zTTDFCzCUexy.1Dqjlh3CQqoR4l9zAiEr.oiRnry.tAG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$AFvq0KwGnj6hF2AGNQvqWuOBj9NTF0O0RSDnu5cn7zk6YqVT4FtrC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$WLzv6yUTuvZJzlo6GAe.Z.Iyo1iNcvypkKLcWtPRErrRkYzlIpAe.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$8uNov69LjIlIZll3O/wV/O2wgYJA19i3rkcZO78UNkHBhg.TM/Qa2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$FIwc265BEP/LtHdSxpkxa.RlxgCkOCdF1zl7NAzNbGpxuFP5ucxL2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$aIfaYK6uqiaU7q7PvPS2.uFtOxis3BbAfvF0joybxQ3fWDIrysI9G','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$TFsH45CLX1FHMorJYDfn3uneRFlBHxGhYxuAOOhmykrVPSqEfSiHW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'martita2201@hotmail.com','Almonte','Marta','$2a$10$vGZdTknx233pEOe/L6w5xeiae2oK2t87lcQpo3YlEONAO1/RPg6ya','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'peval@gmail.com','Valdes','Juca','$2a$10$vK1xEFixt9P3YYrAHmVsn.aopZA/maVf4ZLhpbaIuudoMsZV/Dofu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'mati@hotmail.com','Matilla','Miguel','$2a$10$ObwFPdgKbsOyUDT2mJA4aeObfd5cda2VlKfjS/gcbps1ubm33hs56','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'admin@email.com','Admin','Admin','$2a$10$nx9lV58DFAfFlKBtwQ7Q/eQ3qEXZV2H.SJ4pih9CQPwqyelk0upjK','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:21:50.300000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+INSERT INTO USER VALUES(36,'correo@correo','correo','correo','$2a$10$o6dMb1W8PfLodsNjjYOwbuhbUlFfi9qpxp.KezqJRJ6tzZkPc2xS6','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 37
+COMMIT
+DISCONNECT
+/*C103*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C104*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C105*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C106*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C107*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C108*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C109*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C110*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C111*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C112*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,NULL,NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$0ECIWyy9Tl73eoADZwgcyOA07Yg1A6bdvo9knAaSsn9CnzhKAf3uW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,NULL,NULL,'lu@gmail.com','Llera','Lucia','$2a$10$ZoykEGQ/7UwIp0/jirb9uuay4TM6lsIIhaBek2pte2qN0IoNQb/ue','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,NULL,NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$vwzcKd1ATETbEYG.9ShXKOtv48th8hQmtRPnkyWooL9lcTAVvM9wm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,NULL,NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$.ubpYdxpUvEzoIy3WMoeNeXWK4VwZTYWXQLhyL6opYKRWzbVNvs1G','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,NULL,NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$FCJZ7RHTBzC6F1iU4rKWsOSHDXqVll60f8gieLOr/5Kc0RmcnNfpW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,NULL,NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$oV5qAZWRqece0nJGymUs0.EDNyaf/G2I59tV6zFj8B0FD59UPDRxu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,NULL,NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$BOcM9iu/7K7GFm8SJrYZ/uhRyWVQ8b5Zv9aGQ/Yhq0d68gZdKtSo.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,NULL,NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$IbMnYrn4hHbYtOIZCu1hfet5YGSDGY8yzOf8JHdU89Hy2hL/aTdh.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,NULL,NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$ozT3JVzRpBNANd9LiXxLl.5PxvIpDJVu.C9iflp4NmTgxvi/nL0aK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,NULL,NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$rlfJwX9nLqlnMU5sahW29.drBEcL2r0mIA5ezCxPrmz/0tFhURb9S','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,NULL,NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$IRsP7NmDTWYVRDq3ncybIObxSHInrdcuWrMVSiTBDK929R4jDaKl.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,NULL,NULL,'peval@gmail.com','Valdes','Juca','$2a$10$aQnTSq/lN4aSzXVXStkTHO5c7bdH.pfcpRZ.1OgyNRfMjaZqqmst.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,NULL,NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$h.L0CUTMxhoDpZD.kLQgB.UqgbMHhlyEbzbY5Kp3KV.eiM9w1UmRa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,NULL,NULL,'admin@email.com','Admin','Admin','$2a$10$PZUleb4vEPtuCLRJIQ8ZDezVrOl6YEjCqoKa7EuS88lc0H4n8DbOS','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:24:02.211000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C113*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C114*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C115*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C116*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C117*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C118*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,NULL,NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$jASZQ8JF.s2mRM.5R3mkr.t2nTEnLBvwWQaNFkmhPRneXaF7T8zjS','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,NULL,NULL,'lu@gmail.com','Llera','Lucia','$2a$10$CuYoZ6DBw9BHvgc0g4Oxv.9tgrdX6VWW/XbxGpPII24TlWnLRSNKG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,NULL,NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$WEUlM9D0CS.5avUbFmcNI.w3WT6GmFC9yBTmKAQ7phykHK8lp48PC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,NULL,NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$Cb0CrFOsa/wwZ/Ssexrx4eh17H90zUaDVrGccTwRpG0mGheMRZxMa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,NULL,NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$47YmyYVDagiNszMRotRpKeCz1Bl5VM6VujGsj./U3Ytx8agPRISCe','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,NULL,NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$lPe0QFh45RToSlkhWdK/5OXv50nw5VrnHZcZRLr2MY/HdMdUKPY7C','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,NULL,NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$s8gbb/zHVaLQyohmaB1aQeVBQnHjgVm1V9TDhVi8MxJiHO0kiTobK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,NULL,NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$Zu7GuSV7H2LPjFRiTxMC3u4FvJu9wPoqDaSvrhVeD8prVj0FwLAcm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,NULL,NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$vEjLWh82wcnz5HNyRiYIgei3EkCZN9UVx5CS9foi6Rn6sk76vVLYG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,NULL,NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$aE58e8YhD0z9WneXPC4Z7eRgWyXYDKhXQOS/0RMkR2XmegcwDqqJe','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,NULL,NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$TnAIZckwFgxa52ffMh62vuurGlUVPyBTbb5UhZh8vsffZLooNYMmC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,NULL,NULL,'peval@gmail.com','Valdes','Juca','$2a$10$QrT0xVFOMOcKcg86Md1ve.ayMr2RJh83LyLxyQDDxHm6NJE7Ru5ve','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,NULL,NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$AL2nWhvwy3MBQ1KE7RQFGemEveKiKLTMagbaOQUlwFbZs5sqmg4fu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,NULL,NULL,'admin@email.com','Admin','Admin','$2a$10$0wkl8ZZDjQ6KvufmntAd9ea8vuaQJJPuFmnZRaEEBSi64Xyndz/qu','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:25:14.184000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C129*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C130*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C131*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C132*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,NULL,NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$bgEcmbQ8YzgzWhD4zbQlQe3/u9KSdB9bPjfzsobSpnTi6wc4RxJTe','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,NULL,NULL,'lu@gmail.com','Llera','Lucia','$2a$10$bDjPltImLfrGPaw4YQ4BfeJehaQ2iMeo9iWD6L52AscDjKwZuUPq2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,NULL,NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$2r7leJ.NkRS4e014SOX4zu1zwz2tY3Z.exmmjMFTWRJSWPZ5Ey/JC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,NULL,NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$abc/TN7lGKPLKU4f/7Peeem6mDYXtZy8ko0/Hc0boQ3kBv/L7JNHa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,NULL,NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$ufE6DG2HfRVrdZsa81wX..U6H8YxTQTAhe7eks/6toLyzbxItfrMm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,NULL,NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$tem2YfR0SFvahVXkcAX3TeTV0VfQKphxCFFEq1g6qRQwnd0KvBlGC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,NULL,NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$vED34a7VeSWKO7h773wShutl6RPSc1L6AUmxqe3w8VhSN4b9Z7Qk.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,NULL,NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$7OzpZKHAwK0ou7k8HDj3luJJCFw2bdUuX0DGq36M50atvgOSoi0we','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,NULL,NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$e5dIX6flBnu7kYMJojz29OVbvv0/2hgc5SR0Uw8DQIFv8wIYMCe/m','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,NULL,NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$n0wAArAXbN0WAVw/ouMBOuyu29SglH79XZtBvCbaKM/.nmz73Ji46','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,NULL,NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$MCLzeNzwd2AkFsPf1qkU.O2gk.Xy8xs1FF7I44sHzcc1xZPbXT8aG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,NULL,NULL,'peval@gmail.com','Valdes','Juca','$2a$10$GZAOpMeutHoKZ7M9DOEPtOTIWxyYAStX0bB8PMsj1sUKIM0D9HsiG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,NULL,NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$VtPl5jkQ95bEVK/XHL/63ex4EO6qWiPHID6Ijh4P.0htp.YYgra4a','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,NULL,NULL,'admin@email.com','Admin','Admin','$2a$10$X6AR8bUMVSvQB4Bh0RKCDul7.Fe8VTNkT9K2M.d9SiZnI27pObxae','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:27:22.095000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+INSERT INTO USER VALUES(36,'Asturias','Calle Oviedo','direccion@direccion','Apellido','Direccion','$2a$10$eJTWs9aimcFbeHsD8cKSlO/KCjskb.kcfU6KdiNiN5u/xEZ8kcBfW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 37
+COMMIT
+DISCONNECT
+/*C133*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C134*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C135*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C136*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C137*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C138*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C139*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C140*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C141*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C142*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+DISCONNECT
+/*C143*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C144*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C145*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C146*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C147*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C148*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C149*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C150*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C151*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C152*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$LToZpFRWICSiJDhJDuhQAulhQAxd1mDWm.IDLFWyDAa2nCOHYhBsi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$pL7yTBYtqtJd35e4SZ1vPuq.JfOufeDxhuin4ZwmR6LDyuuz7n3bi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$Ys0jQ3ajb.d0pa56VnxjveaCKB4SZ3sbf/yH.3JJY7RKpZhe7AimS','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$tUgiasTE3XSi4dGqc4Rt.eE3m494SKbUjqzzdVa.pBV34yO9I3Qiu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$/Sqor.YCY9JyAepsDzzjhuLn9HA0DXd2gbA1UfvJZPxgcO0bVmEhK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$sCKoHxsqJglGvIJGKrdv.uQCFAKB5AnV6TU8S6nUl/OV9SydTcytW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$qEH3EhWHR7t53xr/a1DQ.Oz6WXgA1BCu752.lYeBEHm.n6Du1IxXa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$OIkuL0ghS9aTihs3y6ZuxORLFm7d3TFdpbh2qe5lnyadf8FlkztC2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$R8YZMTfWpWXHuf20I/kWo.6X3YQ7I5iv/XbefVIRBL5PlrRrWoEGC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$RPAVOz0d.rtK7IW59iteMuSl4xeyMxPQKEkRtDXyu6asWM6zFBOcm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$vngWsmZnLBfBVnuZqE0XIuJie1R3LFhQc3oEB/wGSgOsfekAakweq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$VKFviiBZvjSPy7BhXlx46uQAuFVvgbeexjAx7ynCcurUVeIpMnjc6','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$pdl4RNK52dowYZVxWdliYegmX0CFau/P5ufb/5/DQ2ko9ZQgfc95q','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$dy1Ldcbp00BdxjvkrrAvD.OI8Cd4zU1SqEKrGpCkVv39XPaCvKIqO','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:43:10.051000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C153*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C154*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C155*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C156*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C157*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C158*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C159*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C160*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C161*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C162*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$SbdFdMcBBgy1NVX9R79qdO7gjluPRZ0jMOjmTx5r3Fv/ELwVXXOTy','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$RJ7k0vUv3gm6on1qu6w8yuDizL9Sa0nM64bhVX5ejx5Wc58OtCl1S','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$c6BVyZO22HGDZb6KGwQ39eBe0SWK21H60XAg0KT1Yms6VrDTc9dcW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$DH0mXzr0hOdKjhJIj5oH0.4JPIpDNQjuzrl/jwJ1PfHaYpp3zzcXa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$dv0yzVxm9aKgxKwDO9WWyO8MN.m4nsO73pflD9pUVFwAqclOR37j2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$ut.USD7bSDOeyBk7v/BLM.zcgW.1gBl/k0gR5CV2Xe6WkKIL9RrCi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$fGmSWRTjoYvVYjaeSKF0RuQE7l1v101/KFj/2daVl4EA9ewZImAne','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$5wu64xhR7Zv5a4y4lBi2d.HN36qFQA.Wy8xc48gYMcX8mBB6oERtm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$rUHKXt.jRqt5WKWtexiQSeoDRdOEKS0lq.o6QxD5mdsb.jC2dCRbi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$wE.xsjU33zx1WoCixfr5u.sZ63F93Cx2I0PkjNtFMDd9H8K1zNG7m','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$7uwR.61HXj1bw4nupHvrbONYun0FSql0kYWHoh2PM54UGU73QR8IC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$eV7WIT21qHcwNvZ25Y.yDuFzb6kxarTZsRAMIzx0TVxWTIMcaXlwW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$O/jQhCkbCxUEPFA/KbPZVe.FoSEZgsVEFWEvKjQs2Zxuy1IgS2IXy','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$wzglBiITDcYt.bhR98QEoeD0zufZxluQbI8bfGtaqBl7zC/wAeGYG','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:46:50.175000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C163*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C164*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C165*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C166*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C167*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C168*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C169*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C170*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C171*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C172*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$LRFZl2tTpp3aS2qRK1EeGeohGnBaRyiYJ.guFi8tMioYGnka4k0xC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$QYgMPIu6EzBJrVDhT2fNEedvkcnG6B6k6IDK23PGJjnkGx24XsrUy','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$HGazINAFNsr7hbxnKQ22kOpZMhfiWFEj7KhwFirpz0zNgW1ZpbMAS','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$cyjgBqcMRdhcPtec3YUjn.bhYMVarsFoWafX0QPs6SEw2k140n4F6','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$7yBrhjNfEOYpL8zVfpv0tO5WYkRBZi8VCAzp3zGBb/DVmFN7mYZf.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$emO8JoVqEkV.OCavY0cf9ubT4Sl1o4wa2.kmIPEvgT5L5qF9a3/H.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$/W652yWakJ7Y9mReYBbzguQS7ByZpa5v8O2LnynaUKQyv8cjUtcvi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$R8NI38nwoOn5RyzyKZMeM.MZn5qLEINOdyth3U1odYpAhmwbDKxrm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$tzdMbmyMs4y2jGERvqtYmeAxJKbKu0fzscA90L0TCaIQd4K7B.a2y','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$ki4SpL/Iw/TpdxXmCYPO0uMdmwUeMTHvYEjE4cpa1zycpzhoIfCi6','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$MwFej2Np35SqWGaUWwhOt.K/EduAxu3uAPh4U7kpI9TcNbNiX7C5C','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$QPxTaVcrZKlU0O3AiwvveOQf6QcVJvlLYmR0yRfKhWmYVlFX9Pci.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$MCbTc/1uQtYnOWD/7BbpzuGaAKtxF9rbt6QPIvXuAzIij8sd4ryxW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$EDXzgtXy2eZRQku70ADKTOr7NY4hN6oLAKMlhMo1nl/3S5I5korOu','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 13:47:53.378000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C173*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C174*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C175*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C176*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C177*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C178*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C179*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C180*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C181*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C182*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+DISCONNECT
+/*C183*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C184*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C185*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C186*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C187*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C188*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C189*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C190*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C191*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$VVG0LDlPF6sjW8YXgczL5uqOdhIQ6sT2jO177k3KzCpvxe9VNuGPy','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$8lbcjqncHvDha9rD6nvFOe9XruXCS4Rl1sTawh9TCXfnP0lJIYgnO','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$MQizcaiIkcNITROwOwBQQ.BrSZyMsXybcgl07FaZVc70et4Y7U1Tm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$uYFd3F7vnGrvuTDMYGWLKeDgv4xYZBKrB.80NesNNC1QZG7zcfUcG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$XNPcZ3zaGlT5G6BLrYl3X.jmw/X.ObPJ0srMbtE6QcP7n.LlBQr0u','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$OTvygjlCwiFGK5I8MPnLouuL5QrYyhE6YF5JzKT7xfx8BCP.pYSEC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$qSsVJ8nRmekIweXAqZmN5e03K/kUXnQ7JbeG6zgRPIpIQX0F211kq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$l5iK4b78huBNweOtGV4LqOscrItVf1beRDPkLVxEIrhjj6wZ/q0uq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$Iu8aKS7vMKccS7pjxSLITOORizH8YA1iREMiiHjP2tB1CuTucPrCK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$FyebeGA8/bFeXuS8D./Gt.Hdl/72SCck0Aybe2yjZsVyLLwMTY0uW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$PIRnKhz42PvRGfhvisk0ouYh9NGVrUPjM1gB9y7A/uEPQ9SljRHM2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$5.j7ufitMKDkHEGJ0lL0wOqc3fhstKAFRwr4Ddg0oGRCZb2KmSLmG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$Gkv4DwwZXoTD/dFPNMdVsuGOB6l55zwdQZx2mRMuNNMdah9pf.fGO','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$ZRaGDZUzAvvYK4nbf8ENV.b3STIZY40kkyQwatE9GUtOr2UTFGtSO','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 14:01:36.240000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C192*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C193*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C194*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C195*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C196*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C197*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C198*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C199*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C200*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C201*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$PxGboMAJx5ymuTlogupTy.hA.T3BJwj8gxtEK2dInAyMrvHxRiMbe','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$./xgFz77wRfNJfG5EVLqu.pZPDNnHTaSLw1TaXZIkQJrwcSEaxmiG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$ec76ZrmIkzHwkfwTNib.Y.SAl6CDxDSOFF1wSwPHFU3oPtktfB/c2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$52ge7rIh81cR43DZuGux9evYyaEe1dDCu/lIYnwb7ROI1.dBB9rZa','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$uPcBeoCiReQobgReO12.LeThhhGA8Hj.Hxb2zNZYcLhBx1AaGqM9K','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$jDQe7If8IxjXT8yqbXorbOMIOFYogbfpUuedv9AesQZzhFV9MsLR2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$xx4X/sT9IL7Wx8aYqLakweqBw6IJordCdsAQ88uXEjVrHfzvzOY3a','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$tpAjqrK6wF2tm1o2IbCkluYVlCX8hpViO/UrSdXG9Jcoq9MscgmCe','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$34FrPRgDVA8hdMJOI.a1Ke2.yh3R2A6RXehFydFgRhpC7K.BnYUmm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$dejcAG5w3jHrK/wBdw5jAuCPdo30jNSkRAf5DUj9oTnpnXIku9sS.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$3Irr7pz2lP7BE/w7CBnAV.ekHCR1jc3TK0zMWI9YVVMYFRHAVaEzG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$uK26vu9IeGtA4LLTIxEhmOkTY1HOAmS5wc6.xc8PunnI5/AMPeAXu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$rg1watPzGttylb/U3rPGzOTCXYmQx3HHdkSFhcdvdnJsGksExj/HG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$TfYJvEClbDrQZMmbF8gJBuyv3qv3qRulHlYT7uBhtghjiHo4AXp62','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 14:02:27.772000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C202*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C203*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C204*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C205*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C206*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C207*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C208*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C209*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C210*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C211*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$JMiUsNq9E7Zox1.Qi28nL.bFkl6f.ck8R9o9gNk76m/yAjPo4903a','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$jl2lHrpZcMoNy8efuImuY.MWPp/CofVvamzsvR0rRhBgNvQQzNI6e','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$9rx1G.7CsxXXemHYljx6QOEA3ZJZMQ0wKU3LH/kaGWET4MKGjqopi','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$.UEklKy3sWBOdKENwMENBuetVW1XEDQK.jv22zQn6Z0JFWNPdGkqu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$RcgHc7aRO1iyi8TrJMH18.UG.9Wf1nhN0xg87asW0CIsAfrpfE8mm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$dKIjo.g96aJFzjRHAWJdvOlkaFgBeEEm7e2EigwLfA3qhQ9yjVK9q','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$zhAndGE2goTJz6zYcfF9SurIhJIfOM/WlwGorLLZTM1XmSQY55a9i','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$3i/VSKKYZF0OO0Cd908nyelYk6tTOjns3GsZFZJ1h0UogFohftg2y','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$vWjtiYwPwvStv8x7a0RnpeFZvuVtJxKxWEottq1Bl7TTlYAdU2W/2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$1q74/afjQ9Y3wdqfC1fr9enXhLJGIx0XQN/e0K.LGBtIH1MF7W47i','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$V9OaGN4RtFN7zCjCEwsrqOZynkOilU4.WYMd0LGZs29awwum3vac.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$VEl3VSNOi0S2DrtISRgB2eywD2.q0BoBumUq1220he4uscd8Dp1h6','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$kN8kXFvS5rNm3CH.PnHwh.GrLsoQp2KaFK0yWaulZNsqJ35gxVjOy','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$8IrU5Wwf.3rWOS52bOZBgeFHjOAfmgbGbLZ3aoUa129DDIyTRBzRG','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 14:05:58.486000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C212*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C213*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C214*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C215*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C216*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C217*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C218*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C219*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C220*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C221*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$qBrl1yHQTqpaD6T7/psjSeqc8oEaKctNvXotm9cxSsipf1HXgLW8O','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$KIxwZRYqKzqMMTrjZEjGk.IPaF5Zo01d6/p3ZGnuAgCT1tM70EsLK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$Q6XHDvfrETlS376e1P7lSulfplc5AzUuksGhmU6gKLxtq1pVwJBam','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$wz0MMtZzN5VbvbJ/iK0Efum5hCTS8ZufmeA1sDR0jIQQZhC693rxG','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$MzF8PAUxK5dBk7Fvmt0t1OrFJsTK8X.kncAD7l1eF4GQe1AEBytRK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$uMHXU4awfczTnlwZfSwdwul4tsL6WTSqw5MyYxuhlPgQRo2wwB.V.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$N1MBbMMbBpbzEMjzNj6ICuBZm08bHWvTeR7tk5Y1wqlTTUQ4HAhsW','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$yl8vo4QKML8MzgKei8tXVOClePTgpmD4QXGWq2QM2FDz.sUDc7ucS','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$dyIgTjMSSADkhHvD/saSqOBThXlzZnJdjjXVb4/2KSIDBImzc0.nm','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$wueHpVvzBKGA/bFi4LS8PuVZWv/i/zeQXSLx3.FHfVvegXjZL/8Xu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$rTTABg/3cEAubqz3SmLvZ.rE3rCHeAP/cIfuiLqz.92GSJcrjXfKq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$EC8NcqA2YgYn3fZjCpJeLODm0ISS8XqdorO8UBaxgobz20ThAxDV2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$EnlfgcZJUxzIizLzLS3Q5uIGeN11zZd/PF85vziqylz0713ZN8U4O','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$DQ1Ub7UMYVFQmlHaWtXJGOEwz4sD5RFPYhad98sNriZ8mBCp9WElS','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 14:07:45.327000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT
+DISCONNECT
+/*C222*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C223*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C224*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C225*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C226*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C227*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C228*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C229*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C230*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C231*/SET SCHEMA PUBLIC
+drop table if exists friends CASCADE 
+drop table if exists invitation CASCADE 
+drop table if exists post CASCADE 
+drop table if exists user CASCADE 
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table friends (sender_id bigint not null, reciever_id bigint not null, primary key (sender_id, reciever_id))
+create table invitation (id bigint not null, receiver_id bigint, sender_id bigint, primary key (id))
+create table post (id bigint not null, content varchar(255), date timestamp, has_image boolean not null, title varchar(255), id_user bigint, primary key (id))
+create table user (id bigint not null, comunidad varchar(255), direccion varchar(255), email varchar(255), last_name varchar(255), name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table friends add constraint FK4xya1s0if7t9w3y9gq8u2r21f foreign key (reciever_id) references user
+alter table friends add constraint FKqry7nmr4c61t7hba3hp461n88 foreign key (sender_id) references user
+alter table invitation add constraint FKgdvkvn8idj5gj6ftrxewyxyiu foreign key (receiver_id) references user
+alter table invitation add constraint FKjsdg53sdrtrreaj06rj8fesh6 foreign key (sender_id) references user
+alter table post add constraint FKrw42wxv5k40xncdu0n02kr1ks foreign key (id_user) references user
+INSERT INTO USER VALUES(1,'Asturias',NULL,'pediaz@gmail.com','D\u00edaz','Pedro','$2a$10$5l1iSiolT9/DySCrnSwViO7iZDZ7nanTk46zJKyxV5k8sMGC/wXqu','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+INSERT INTO USER VALUES(2,'Asturias',NULL,'lu@gmail.com','Llera','Lucia','$2a$10$TLLdmHS53rEKoU7TejjeAeDfZaJ/ovxUagWRNqrYZqHvCBG49GkWK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+INSERT INTO USER VALUES(3,'Asturias',NULL,'marod@yahoo.es','Rodr\u00edguez','Mar\u00eda','$2a$10$xkz4mlE6s.F2PCc.lgWPzOHVpjAG6qCcco/57iwfHs7tCBRBqhLIq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+INSERT INTO USER VALUES(4,'Asturias',NULL,'martitaalmonteperdido@hotmail.com','Almonte','Marta','$2a$10$7sBQj.Fl3ME7Tl.sjBmEJu019waK7hqZJZxxqaVocXLsvat18BDf2','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+INSERT INTO USER VALUES(5,'Asturias',NULL,'pescadofrito@gmail.com','Valdes','Pelayo','$2a$10$7NlsNHv6/Zok4Fc1e0vUAujyqhaaw7Dxi13h.A5QMi/tT86wurXXO','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+INSERT INTO USER VALUES(6,'Asturias',NULL,'diezne@yahoo.es','N\u00fa\u00f1ez','Diego','$2a$10$h1GMeKukIjqwGuHF6i68tend6Ng8gfUIk17uTpWPxW.1ExoiiRMT.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+INSERT INTO USER VALUES(7,'Asturias',NULL,'tutuya@hotmail.com','Casillas','Andrea','$2a$10$fZqShMY8sRibdRPtg90pi.6Sz9ILgZCWWBLAkowjaVllgYCpAp6RC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'Asturias',NULL,'juanito11@yahoo.es','D\u00edaz','Juan','$2a$10$RAoz79PufEYU5qqXBCCUye2yNaAeS8yV1tVgd/AcLcT/i6G9Gzy6u','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+INSERT INTO USER VALUES(9,'Asturias',NULL,'pepe@gmail.com','Gonzalez','Pepe','$2a$10$vUJQO7Fy13pyz8ZCugFzXOv9PCOHtH9Bv1R0cejtvD2zuVYRbhxBK','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
+COMMIT
+INSERT INTO USER VALUES(10,'Asturias',NULL,'mariadelao@gmail.com','Hurl\u00e9','Mar\u00eda','$2a$10$TeuAkxiFR1GQpUeihIA1UO5PSnHxg5a7gycXSGAMC6VFBCz6Mqecq','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
+INSERT INTO USER VALUES(11,'Asturias',NULL,'martita2201@hotmail.com','Almonte','Marta','$2a$10$8GohfXlgQUNW1t2PboCLZuSOv6L1X0icuiPyBhemefOn5BJ9BjbkS','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'Baleares',NULL,'peval@gmail.com','Valdes','Juca','$2a$10$aYGSXdq3zAvjIqjjIlh.x.aH8qF6y3x7UKm7Io9f1O5a5FUUTennC','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
+COMMIT
+INSERT INTO USER VALUES(13,'Canarias',NULL,'mati@hotmail.com','Matilla','Miguel','$2a$10$455gojT5vMvvge9DJSd/su2SJgRHnrThJWbw8OmL425doaDHB0x2.','ROLE_PUBLIC')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
+COMMIT
+INSERT INTO USER VALUES(14,'Asturias',NULL,'admin@email.com','Admin','Admin','$2a$10$/SkDAJrbgK7lRKe7xH8RIuVluyCZVxvIQTOv2.Uggxj5Boz1scYVm','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
+COMMIT
+INSERT INTO INVITATION VALUES(15,3,1)
+INSERT INTO INVITATION VALUES(16,1,7)
+INSERT INTO INVITATION VALUES(17,1,8)
+INSERT INTO INVITATION VALUES(18,1,9)
+INSERT INTO INVITATION VALUES(19,1,10)
+INSERT INTO INVITATION VALUES(20,2,1)
+INSERT INTO INVITATION VALUES(21,5,1)
+INSERT INTO INVITATION VALUES(22,6,1)
+INSERT INTO INVITATION VALUES(23,7,1)
+INSERT INTO INVITATION VALUES(24,8,1)
+INSERT INTO INVITATION VALUES(25,3,2)
+INSERT INTO INVITATION VALUES(26,5,2)
+INSERT INTO INVITATION VALUES(27,6,2)
+INSERT INTO INVITATION VALUES(28,7,2)
+INSERT INTO INVITATION VALUES(29,8,2)
+INSERT INTO INVITATION VALUES(30,4,3)
+INSERT INTO INVITATION VALUES(31,5,3)
+INSERT INTO INVITATION VALUES(32,6,3)
+INSERT INTO INVITATION VALUES(33,7,3)
+INSERT INTO INVITATION VALUES(34,8,3)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
+COMMIT
+INSERT INTO POST VALUES(35,'Buenas','2020-06-29 14:10:20.907000',FALSE,'Hola',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
+COMMIT

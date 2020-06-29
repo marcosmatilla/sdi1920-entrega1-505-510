@@ -85,6 +85,10 @@ public class UsersController {
 			users = usersService.getUsers(pageable, principal.getName());
 		}
 		loggerService.seeUsers(principal.getName());
+		String[] comunidades = { "Asturias", "Madrid", "Andalucía", "Aragón", "Murcia", "Galicia", "Cantabria",
+				"País Vasco", "Navarra", "Cataluña", "Castilla y León", "Castilla La Mancha", "Comunidad Valenciana",
+				"Extremadura", "Baleares", "Canarias" };
+		model.addAttribute("comunidades", comunidades);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
